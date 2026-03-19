@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Collections — Blooms Gown</title>
+  <meta name="description" content="Browse 400+ designer gowns for rental in Kuala Lumpur. Filter by occasion and colour. Prom, Bridal, ROM, Dinner, Awards & Photoshoot.">
+  <link rel="preconnect" href="https://fonts.cdnfonts.com">
+  <link href="https://fonts.cdnfonts.com/css/tex-gyre-termes" rel="stylesheet">
+  <script src="data/products.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ivory: #FAF6EE;
+      --cream: #F2E8D5;
+      --sand: #E5D0B0;
+      --taupe: #C4A882;
+      --text: #1A0C06;
+      --head: #2C1208;
+      --sub: #4A2010;
+      --accent: #8B5E40;
+      --dark: #150804;
+      --font: 'TeX Gyre Termes', 'Times New Roman', serif;
+      --ease-snap: cubic-bezier(.16,1,.3,1);
+      --ease-smooth: cubic-bezier(.4,0,.2,1);
+      --nav-h: 72px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); background: var(--ivory); color: var(--text); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: var(--font); cursor: pointer; border: none; background: none; }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--dark); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+
+    /* ═══════ NAV ═══════ */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: var(--nav-h);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px;
+      background: rgba(21,8,4,0.88);
+      backdrop-filter: blur(18px) saturate(1.4);
+      -webkit-backdrop-filter: blur(18px) saturate(1.4);
+      box-shadow: 0 1px 0 rgba(196,168,130,0.12);
+    }
+    .nav-logo { display: flex; flex-direction: column; line-height: 1; gap: 1px; }
+    .nav-logo .logo-blooms { font-size: 14px; font-variant: small-caps; letter-spacing: 0.22em; color: var(--sand); text-transform: lowercase; }
+    .nav-logo .logo-gown { font-size: 20px; font-style: italic; color: var(--ivory); letter-spacing: 0.04em; }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a { font-size: 13px; letter-spacing: 0.12em; color: rgba(250,246,238,0.75); transition: color 0.25s; text-transform: uppercase; }
+    .nav-links a:hover, .nav-links a.active { color: var(--ivory); }
+    .nav-actions { display: flex; align-items: center; gap: 20px; }
+    .nav-wa { display: flex; align-items: center; gap: 8px; font-size: 12px; letter-spacing: 0.1em; color: var(--sand); text-transform: uppercase; border: 1px solid rgba(196,168,130,0.3); padding: 8px 18px; border-radius: 100px; transition: all 0.3s var(--ease-smooth); }
+    .nav-wa:hover { background: rgba(196,168,130,0.1); border-color: var(--taupe); color: var(--ivory); }
+    .nav-burger { display: none; flex-direction: column; gap: 5px; padding: 8px; cursor: pointer; }
+    .nav-burger span { display: block; width: 22px; height: 1.5px; background: var(--ivory); transition: all 0.35s var(--ease-snap); transform-origin: center; }
+    .nav-burger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-burger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav-burger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* DRAWER */
+    .drawer { position: fixed; inset: 0; z-index: 99; background: var(--dark); display: flex; flex-direction: column; justify-content: center; padding: 48px; opacity: 0; pointer-events: none; transition: opacity 0.45s var(--ease-snap); }
+    .drawer.open { opacity: 1; pointer-events: all; }
+    .drawer nav { display: flex; flex-direction: column; gap: 8px; }
+    .drawer nav a { font-size: clamp(36px,7vw,64px); font-style: italic; color: var(--ivory); letter-spacing: -0.01em; line-height: 1.15; opacity: 0; transform: translateY(24px); transition: opacity 0.45s var(--ease-snap), transform 0.45s var(--ease-snap), color 0.2s; }
+    .drawer nav a:hover { color: var(--taupe); }
+    .drawer.open nav a { opacity: 1; transform: translateY(0); }
+    .drawer.open nav a:nth-child(1) { transition-delay: 0.08s; }
+    .drawer.open nav a:nth-child(2) { transition-delay: 0.13s; }
+    .drawer.open nav a:nth-child(3) { transition-delay: 0.18s; }
+    .drawer.open nav a:nth-child(4) { transition-delay: 0.23s; }
+    .drawer.open nav a:nth-child(5) { transition-delay: 0.28s; }
+    .drawer.open nav a:nth-child(6) { transition-delay: 0.33s; }
+    .drawer-footer { position: absolute; bottom: 48px; left: 48px; font-size: 12px; letter-spacing: 0.15em; color: rgba(250,246,238,0.35); text-transform: uppercase; }
+
+    /* ═══════ PAGE HEADER ═══════ */
+    .page-header {
+      padding-top: calc(var(--nav-h) + 64px);
+      padding-bottom: 64px;
+      padding-left: 48px;
+      padding-right: 48px;
+      background: var(--dark);
+      position: relative;
+      overflow: hidden;
+    }
+    .page-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 80% at 80% 50%, rgba(139,94,64,0.1), transparent 65%);
+      pointer-events: none;
+    }
+    .page-header-inner { position: relative; }
+    .page-eyebrow { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(196,168,130,0.4); margin-bottom: 20px; display: block; }
+    .page-title { font-size: clamp(52px,10vw,120px); font-weight: 400; color: var(--ivory); letter-spacing: -0.03em; line-height: 0.92; }
+    .page-title .line { overflow: hidden; display: block; }
+    .page-title .line-inner { display: block; animation: lineReveal 0.9s var(--ease-snap) forwards; }
+    .page-title .line:nth-child(1) .line-inner { animation-delay: 0.1s; }
+    .page-title .line:nth-child(2) .line-inner { animation-delay: 0.22s; font-style: italic; color: var(--taupe); }
+    @keyframes lineReveal { from { transform: translateY(110%); } to { transform: translateY(0); } }
+
+    .page-header-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 32px;
+    }
+    .count-display { font-size: 13px; letter-spacing: 0.1em; color: rgba(196,168,130,0.5); }
+    .count-display strong { color: var(--taupe); }
+
+    /* ═══════ FILTER BAR ═══════ */
+    .filter-bar {
+      position: sticky;
+      top: var(--nav-h);
+      z-index: 50;
+      background: rgba(250,246,238,0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--sand);
+      padding: 0 48px;
+    }
+
+    .filter-inner {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      height: 56px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .filter-inner::-webkit-scrollbar { display: none; }
+
+    .filter-axis {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-right: 20px;
+      flex-shrink: 0;
+    }
+    .axis-btn {
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      padding: 6px 14px;
+      border-radius: 100px;
+      background: transparent;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all 0.25s var(--ease-smooth);
+      font-family: var(--font);
+    }
+    .axis-btn.active {
+      background: var(--head);
+      color: var(--ivory);
+      border-color: var(--head);
+    }
+
+    .filter-divider { width: 1px; height: 24px; background: var(--sand); margin: 0 20px; flex-shrink: 0; }
+
+    .filter-chips {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex: 1;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .filter-chips::-webkit-scrollbar { display: none; }
+
+    .chip {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--sub);
+      padding: 6px 14px;
+      border-radius: 100px;
+      background: transparent;
+      border: 1px solid var(--sand);
+      cursor: pointer;
+      white-space: nowrap;
+      font-family: var(--font);
+      transition: all 0.25s var(--ease-smooth);
+    }
+    .chip:hover { border-color: var(--taupe); color: var(--head); }
+    .chip.active { background: var(--head); color: var(--ivory); border-color: var(--head); }
+
+    .chip-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+    .filter-sort {
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+    .sort-select {
+      font-family: var(--font);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--sub);
+      background: transparent;
+      border: 1px solid var(--sand);
+      border-radius: 100px;
+      padding: 7px 32px 7px 14px;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238B5E40' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      transition: border-color 0.2s;
+    }
+    .sort-select:focus { outline: none; border-color: var(--taupe); }
+
+    /* ═══════ COLLECTION GRID ═══════ */
+    .collection-section { padding: 48px 48px 96px; }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .product-card {
+      display: block;
+      cursor: pointer;
+      transition: opacity 0.5s var(--ease-smooth), transform 0.5s var(--ease-smooth);
+    }
+    .product-card.dimmed { opacity: 0.38; }
+    .product-card.entering { animation: cardEnter 0.6s var(--ease-snap) both; }
+    @keyframes cardEnter { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+
+    .card-img-wrap { position: relative; border-radius: 10px; overflow: hidden; aspect-ratio: 2/3; background: var(--sand); }
+    .card-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease-smooth); }
+    .product-card:not(.dimmed):hover .card-img { transform: scale(1.05); }
+    .card-overlay { position: absolute; inset: 0; background: rgba(21,8,4,0.5); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.35s var(--ease-smooth); }
+    .product-card:not(.dimmed):hover .card-overlay { opacity: 1; }
+    .card-overlay-text { font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ivory); }
+
+    .card-dot { position: absolute; top: 14px; left: 14px; width: 10px; height: 10px; border-radius: 50%; }
+    .co-lavender  { background: #b99fd6; }
+    .co-blush     { background: #e8b4b8; }
+    .co-silver    { background: #c8cfd8; }
+    .co-champagne { background: #d4b896; }
+    .co-pearl     { background: #e8e0d0; border: 1px solid rgba(0,0,0,0.1); }
+    .co-dustypink { background: #d4a0a0; }
+    .co-burgundy  { background: #8b2020; }
+    .co-rose      { background: #d4708a; }
+    .co-floral    { background: linear-gradient(135deg,#e8b4b8,#d4708a); }
+
+    .card-badge { position: absolute; top: 14px; right: 14px; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--dark); background: var(--sand); padding: 4px 10px; border-radius: 100px; }
+    .card-meta { padding: 14px 2px 0; }
+    .card-name { font-size: 14px; color: var(--head); letter-spacing: 0.01em; line-height: 1.4; margin-bottom: 6px; }
+    .card-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+    .card-tag { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--taupe); }
+
+    /* empty state */
+    .empty-state { grid-column: 1/-1; text-align: center; padding: 80px 20px; }
+    .empty-state h3 { font-size: 24px; color: var(--head); font-weight: 400; margin-bottom: 12px; }
+    .empty-state p { font-size: 15px; font-style: italic; color: var(--accent); }
+
+    /* ═══════ FOOTER ═══════ */
+    .footer { background: var(--dark); padding: 64px 48px 40px; }
+    .footer-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 40px; margin-bottom: 56px; padding-bottom: 56px; border-bottom: 1px solid rgba(196,168,130,0.1); }
+    .footer-logo .logo-blooms { display: block; font-size: 13px; font-variant: small-caps; letter-spacing: 0.22em; color: var(--sand); text-transform: lowercase; }
+    .footer-logo .logo-gown { display: block; font-size: 28px; font-style: italic; color: var(--ivory); letter-spacing: 0.04em; line-height: 1.1; }
+    .footer-tagline { font-size: 13px; color: rgba(196,168,130,0.4); margin-top: 10px; letter-spacing: 0.04em; }
+    .footer-links { display: flex; gap: 64px; }
+    .footer-col h4 { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(196,168,130,0.4); margin-bottom: 20px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .footer-col ul a { font-size: 14px; color: rgba(250,246,238,0.55); transition: color 0.2s; }
+    .footer-col ul a:hover { color: var(--ivory); }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .footer-copy { font-size: 12px; color: rgba(196,168,130,0.25); letter-spacing: 0.06em; }
+    .footer-bottom-links { display: flex; gap: 24px; }
+    .footer-bottom-links a { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(196,168,130,0.3); transition: color 0.2s; }
+    .footer-bottom-links a:hover { color: var(--taupe); }
+
+    /* ═══════ WA FLOAT ═══════ */
+    .wa-float { position: fixed; bottom: 32px; right: 32px; z-index: 90; width: 56px; height: 56px; border-radius: 50%; background: #25D366; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(37,211,102,0.4); transition: transform 0.3s var(--ease-snap), box-shadow 0.3s var(--ease-snap); }
+    .wa-float:hover { transform: scale(1.1) translateY(-2px); box-shadow: 0 8px 28px rgba(37,211,102,0.5); }
+    .wa-float svg { width: 28px; height: 28px; fill: white; }
+
+    /* ═══════ RESPONSIVE ═══════ */
+    @media (max-width: 1200px) { .product-grid { grid-template-columns: repeat(3,1fr); } }
+    @media (max-width: 1024px) { .product-grid { grid-template-columns: repeat(3,1fr); } }
+    @media (max-width: 768px) {
+      :root { --nav-h: 60px; }
+      .nav { padding: 0 20px; }
+      .nav-links, .nav-wa { display: none; }
+      .nav-burger { display: flex; }
+      .page-header { padding-left: 20px; padding-right: 20px; }
+      .filter-bar { padding: 0 20px; }
+      .collection-section { padding: 32px 20px 64px; }
+      .product-grid { grid-template-columns: repeat(2,1fr); gap: 12px; }
+      .footer { padding: 48px 20px 32px; }
+      .footer-top { flex-direction: column; }
+      .footer-links { flex-direction: column; gap: 32px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 480px) {
+      .product-grid { grid-template-columns: repeat(2,1fr); gap: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="nav" id="nav" role="banner">
+    <a href="index.html" class="nav-logo" aria-label="Blooms Gown Home">
+      <span class="logo-blooms">Blooms</span>
+      <span class="logo-gown">gown</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="collections.html" class="active">Collections</a></li>
+      <li><a href="collections.html?occasion=prom">Prom</a></li>
+      <li><a href="collections.html?occasion=bridal">Bridal</a></li>
+      <li><a href="collections.html?occasion=dinner">Dinner</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="https://wa.link/bloomsgown" target="_blank" rel="noopener" class="nav-wa">Book Appointment</a>
+      <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- DRAWER -->
+  <div class="drawer" id="drawer" role="dialog" aria-label="Navigation menu">
+    <nav>
+      <a href="collections.html">Collections</a>
+      <a href="collections.html?occasion=prom">Prom Night</a>
+      <a href="collections.html?occasion=bridal">Bridal</a>
+      <a href="collections.html?occasion=dinner">Dinner &amp; Gala</a>
+      <a href="collections.html?occasion=awards">Awards Night</a>
+      <a href="https://wa.link/bloomsgown" target="_blank" rel="noopener">Book Appointment &#8599;</a>
+    </nav>
+    <p class="drawer-footer">Blooms Gown · Kuala Lumpur</p>
+  </div>
+
+  <!-- PAGE HEADER -->
+  <section class="page-header" aria-labelledby="page-title">
+    <div class="page-header-inner">
+      <span class="page-eyebrow">Blooms Gown · Kuala Lumpur</span>
+      <h1 class="page-title" id="page-title">
+        <span class="line"><span class="line-inner">Our</span></span>
+        <span class="line"><span class="line-inner">Collections</span></span>
+      </h1>
+      <div class="page-header-meta">
+        <p class="count-display" id="countDisplay">Showing <strong id="countNum">31</strong> gowns</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FILTER BAR -->
+  <div class="filter-bar" role="search" aria-label="Filter gowns">
+    <div class="filter-inner">
+      <!-- Axis Tabs -->
+      <div class="filter-axis">
+        <button class="axis-btn active" data-axis="occasion" aria-pressed="true">Occasion</button>
+        <button class="axis-btn" data-axis="colour" aria-pressed="false">Colour</button>
+      </div>
+
+      <div class="filter-divider" aria-hidden="true"></div>
+
+      <!-- Occasion Chips -->
+      <div class="filter-chips" id="occasionChips" role="group" aria-label="Filter by occasion">
+        <button class="chip active" data-occasion="all">All Gowns</button>
+        <button class="chip" data-occasion="prom">Prom Night</button>
+        <button class="chip" data-occasion="bridal">Bridal</button>
+        <button class="chip" data-occasion="rom">ROM &amp; Solemnisation</button>
+        <button class="chip" data-occasion="dinner">Dinner &amp; Gala</button>
+        <button class="chip" data-occasion="awards">Awards Night</button>
+        <button class="chip" data-occasion="photoshoot">Photoshoot</button>
+      </div>
+
+      <!-- Colour Chips (hidden initially) -->
+      <div class="filter-chips" id="colourChips" role="group" aria-label="Filter by colour" style="display:none">
+        <button class="chip active" data-colour="all">All</button>
+        <button class="chip" data-colour="lavender"><span class="chip-dot" style="background:#b99fd6"></span>Lavender</button>
+        <button class="chip" data-colour="silver"><span class="chip-dot" style="background:#c8cfd8"></span>Silver</button>
+        <button class="chip" data-colour="blush"><span class="chip-dot" style="background:#e8b4b8"></span>Blush</button>
+        <button class="chip" data-colour="champagne"><span class="chip-dot" style="background:#d4b896"></span>Champagne</button>
+        <button class="chip" data-colour="pearl"><span class="chip-dot" style="background:#e8e0d0;border:1px solid rgba(0,0,0,0.15)"></span>White &amp; Pearl</button>
+        <button class="chip" data-colour="burgundy"><span class="chip-dot" style="background:#8b2020"></span>Red</button>
+        <button class="chip" data-colour="floral"><span class="chip-dot" style="background:linear-gradient(135deg,#e8b4b8,#d4708a)"></span>Floral</button>
+        <button class="chip" data-colour="dustypink"><span class="chip-dot" style="background:#d4a0a0"></span>Dusty Rose</button>
+      </div>
+
+      <!-- Sort -->
+      <div class="filter-sort">
+        <select class="sort-select" id="sortSelect" aria-label="Sort gowns">
+          <option value="featured">Featured</option>
+          <option value="new">New First</option>
+          <option value="az">A – Z</option>
+          <option value="za">Z – A</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- COLLECTION GRID -->
+  <main>
+    <section class="collection-section">
+      <div class="product-grid" id="productGrid" aria-label="Gown collection"></div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer-top">
+      <div>
+        <a href="index.html" class="footer-logo" aria-label="Blooms Gown">
+          <span class="logo-blooms">Blooms</span>
+          <span class="logo-gown">gown</span>
+        </a>
+        <p class="footer-tagline">Luxury dress rental · Kuala Lumpur</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="collections.html">All Collections</a></li>
+            <li><a href="collections.html?occasion=prom">Prom Night</a></li>
+            <li><a href="collections.html?occasion=bridal">Bridal</a></li>
+            <li><a href="collections.html?occasion=dinner">Dinner &amp; Gala</a></li>
+            <li><a href="collections.html?occasion=awards">Awards Night</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <ul>
+            <li><a href="https://instagram.com/blooms.gown" target="_blank" rel="noopener">Instagram</a></li>
+            <li><a href="https://wa.link/bloomsgown" target="_blank" rel="noopener">WhatsApp</a></li>
+            <li><a href="https://wa.link/bloomsgown" target="_blank" rel="noopener">Book Now</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">&#169; 2025 Blooms Gown. All rights reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="https://wa.link/bloomsgown" target="_blank" rel="noopener">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WA FLOAT -->
+  <a href="https://wa.link/bloomsgown" target="_blank" rel="noopener" class="wa-float" aria-label="Chat on WhatsApp">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+
+  <script>
+    // ── DRAWER ──
+    const burger = document.getElementById('navBurger');
+    const drawer = document.getElementById('drawer');
+    let drawerOpen = false;
+    function toggleDrawer(s) {
+      drawerOpen = s;
+      burger.classList.toggle('open', s);
+      drawer.classList.toggle('open', s);
+      burger.setAttribute('aria-expanded', s);
+      document.body.style.overflow = s ? 'hidden' : '';
+    }
+    burger.addEventListener('click', () => toggleDrawer(!drawerOpen));
+    drawer.addEventListener('click', e => { if (e.target === drawer) toggleDrawer(false); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && drawerOpen) toggleDrawer(false); });
+
+    // ── STATE ──
+    const occMap = { prom:'Prom', bridal:'Bridal', rom:'ROM', dinner:'Dinner', awards:'Awards', photoshoot:'Photoshoot' };
+    let currentAxis = 'occasion';
+    let activeOccasion = 'all';
+    let activeColour = 'all';
+    let currentSort = 'featured';
+
+    // ── URL PARAMS ──
+    const params = new URLSearchParams(window.location.search);
+    const urlOcc = params.get('occasion');
+    const urlColour = params.get('colour');
+    if (urlOcc) { activeOccasion = urlOcc; }
+    if (urlColour) { activeColour = urlColour; currentAxis = 'colour'; }
+
+    // ── AXIS TABS ──
+    const axisBtns = document.querySelectorAll('.axis-btn');
+    const occasionChips = document.getElementById('occasionChips');
+    const colourChips = document.getElementById('colourChips');
+
+    axisBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        currentAxis = btn.dataset.axis;
+        axisBtns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
+        btn.classList.add('active');
+        btn.setAttribute('aria-pressed','true');
+        if (currentAxis === 'occasion') {
+          occasionChips.style.display = 'flex';
+          colourChips.style.display = 'none';
+        } else {
+          occasionChips.style.display = 'none';
+          colourChips.style.display = 'flex';
+        }
+        renderGrid();
+      });
+    });
+
+    // ── OCCASION CHIPS ──
+    document.querySelectorAll('#occasionChips .chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        activeOccasion = chip.dataset.occasion;
+        document.querySelectorAll('#occasionChips .chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        renderGrid();
+      });
+    });
+
+    // ── COLOUR CHIPS ──
+    document.querySelectorAll('#colourChips .chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        activeColour = chip.dataset.colour;
+        document.querySelectorAll('#colourChips .chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        renderGrid();
+      });
+    });
+
+    // ── SORT ──
+    document.getElementById('sortSelect').addEventListener('change', e => {
+      currentSort = e.target.value;
+      renderGrid();
+    });
+
+    // ── FILTER LOGIC ──
+    function isMatch(p) {
+      if (currentAxis === 'occasion') {
+        if (activeOccasion === 'all') return true;
+        return p.occasions.includes(activeOccasion);
+      } else {
+        if (activeColour === 'all') return true;
+        return p.colorKey === activeColour;
+      }
+    }
+
+    function getSorted(products) {
+      const arr = [...products];
+      if (currentSort === 'new') return arr.sort((a,b) => (b.isNew?1:0) - (a.isNew?1:0) || a.order - b.order);
+      if (currentSort === 'az') return arr.sort((a,b) => a.name.localeCompare(b.name));
+      if (currentSort === 'za') return arr.sort((a,b) => b.name.localeCompare(a.name));
+      return arr.sort((a,b) => a.order - b.order);
+    }
+
+    // ── RENDER ──
+    const grid = document.getElementById('productGrid');
+    const countNum = document.getElementById('countNum');
+
+    function buildCard(p, matched) {
+      const img = p.images[0] || '';
+      const occ = p.occasions.map(k => occMap[k] || k).join(' · ');
+      const a = document.createElement('a');
+      a.className = 'product-card' + (matched ? '' : ' dimmed');
+      a.href = 'product.html?id=' + p.id;
+      a.dataset.id = p.id;
+      a.setAttribute('aria-label', p.name);
+      a.innerHTML =
+        '<div class="card-img-wrap">' +
+          '<img class="card-img" src="images/' + img + '" alt="' + p.name + '" loading="lazy">' +
+          '<div class="card-dot ' + p.dot + '" aria-hidden="true"></div>' +
+          (p.isNew ? '<span class="card-badge">New</span>' : '') +
+          '<div class="card-overlay" aria-hidden="true"><span class="card-overlay-text">View Gown &#8594;</span></div>' +
+        '</div>' +
+        '<div class="card-meta">' +
+          '<p class="card-name">' + p.name + '</p>' +
+          '<div class="card-tags"><span class="card-tag">' + p.silhouette + '</span><span class="card-tag"> · </span><span class="card-tag">' + occ + '</span></div>' +
+        '</div>';
+      return a;
+    }
+
+    function renderGrid() {
+      const sorted = getSorted(window.PRODUCTS);
+      const matched = sorted.filter(p => isMatch(p));
+      const unmatched = sorted.filter(p => !isMatch(p));
+
+      // Update count
+      countNum.textContent = matched.length;
+
+      // Smart sort: matched first, then unmatched (dimmed)
+      const ordered = [...matched, ...unmatched];
+
+      // Animate reorder via DOM rebuild with stagger
+      // Remove existing cards
+      while (grid.firstChild) grid.removeChild(grid.firstChild);
+
+      if (matched.length === 0) {
+        const empty = document.createElement('div');
+        empty.className = 'empty-state';
+        empty.innerHTML = '<h3>No gowns found</h3><p>Try a different filter or browse all gowns.</p>';
+        grid.appendChild(empty);
+        return;
+      }
+
+      ordered.forEach((p, i) => {
+        const isMatched = matched.includes(p);
+        const card = buildCard(p, isMatched);
+        if (isMatched) {
+          card.style.animationDelay = (i * 0.04) + 's';
+          card.classList.add('entering');
+        }
+        grid.appendChild(card);
+      });
+    }
+
+    // ── INIT ──
+    // Apply URL params to UI
+    if (urlOcc) {
+      document.querySelectorAll('#occasionChips .chip').forEach(c => {
+        c.classList.toggle('active', c.dataset.occasion === urlOcc);
+      });
+    }
+    if (urlColour) {
+      currentAxis = 'colour';
+      axisBtns.forEach(b => {
+        b.classList.toggle('active', b.dataset.axis === 'colour');
+        b.setAttribute('aria-pressed', b.dataset.axis === 'colour' ? 'true' : 'false');
+      });
+      occasionChips.style.display = 'none';
+      colourChips.style.display = 'flex';
+      document.querySelectorAll('#colourChips .chip').forEach(c => {
+        c.classList.toggle('active', c.dataset.colour === urlColour);
+      });
+    }
+
+    renderGrid();
+  </script>
+</body>
+</html>

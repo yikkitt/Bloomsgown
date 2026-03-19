@@ -1,312 +1,875 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Browse Blooms Gown collections — 400+ designer gowns in Kuala Lumpur. Filter by colour. Blush, Burgundy, Champagne, Lavender, Onyx and more.">
-<meta name="robots" content="index, follow">
-<title>Collections — Blooms Gown & Dress Rental · Kuala Lumpur</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
-<style>
-:root{
-  --ink:#140A04;--espresso:#3D1F0D;--dark-mink:#5C3520;
-  --mink:#7A5C48;--warm-mink:#9B7E68;--taupe:#C4A882;
-  --sand:#E5D0B0;--cream:#F2E8D5;--ivory:#FAF6EE;
-  --rose:#8C4A3C;--gold:#A07830;
-  --serif:'TeX Gyre Termes','Times New Roman',Georgia,serif;
-  --ui:'Jost',system-ui,sans-serif;
-  --ls:0.15em;--lh:1.2;
-  --ease:cubic-bezier(.16,1,.3,1);
-  --g:clamp(20px,5vw,68px);--maxw:1240px;--gap:clamp(10px,1.8vw,20px);
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{font-size:16px;scroll-behavior:smooth}
-body{font-family:var(--serif);background:var(--ivory);color:var(--ink);overflow-x:hidden;-webkit-font-smoothing:antialiased;line-height:var(--lh);letter-spacing:var(--ls)}
-img{display:block;width:100%;height:100%;object-fit:cover}
-a{text-decoration:none;color:inherit}
-button{font-family:inherit;border:none;background:none;cursor:pointer}
-::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:var(--ivory)}::-webkit-scrollbar-thumb{background:var(--sand)}
-body::before{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");opacity:.28}
-@keyframes clipUp{to{clip-path:inset(0 0 0% 0)}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
-@keyframes scaleX1{to{transform:scaleX(1)}}
-@keyframes waIn{from{opacity:0;transform:scale(.85) translateY(12px)}to{opacity:1;transform:none}}
-@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
-/* NAV */
-#nav{position:fixed;inset:0 0 auto 0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:20px var(--g);background:rgba(250,246,238,.94);backdrop-filter:blur(20px) saturate(1.5);-webkit-backdrop-filter:blur(20px) saturate(1.5);border-bottom:1px solid rgba(196,168,130,.1);transition:padding .42s var(--ease)}
-#nav.slim{padding:13px var(--g)}
-.nav-logo{display:flex;flex-direction:column;line-height:1.05;gap:1px}
-.nav-logo-top{font-family:var(--ui);font-weight:200;font-size:10px;letter-spacing:.52em;text-transform:uppercase;color:var(--espresso)}
-.nav-logo-script{font-family:var(--serif);font-style:italic;font-size:18px;color:var(--mink);letter-spacing:.04em}
-.nav-links{display:flex;gap:32px;list-style:none}
-.nav-links a{font-family:var(--ui);font-weight:300;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--mink);padding-bottom:2px;position:relative;transition:color .25s}
-.nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--espresso);transition:width .3s var(--ease)}
-.nav-links a:hover,.nav-links a[aria-current]{color:var(--espresso)}
-.nav-links a:hover::after,.nav-links a[aria-current]::after{width:100%}
-.nav-book{font-family:var(--ui);font-weight:300;font-size:10px;letter-spacing:.24em;text-transform:uppercase;padding:9px 20px;border:1px solid rgba(61,31,13,.18);color:var(--espresso);transition:background .28s,color .28s,border-color .28s}
-.nav-book:hover{background:var(--espresso);color:var(--ivory);border-color:var(--espresso)}
-.nav-ham{display:none;flex-direction:column;gap:5px;padding:4px}
-.nav-ham span{display:block;width:22px;height:1px;background:var(--espresso);transition:transform .3s var(--ease),opacity .3s}
-.nav-ham.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
-.nav-ham.open span:nth-child(2){opacity:0}
-.nav-ham.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
-.nav-drawer{position:fixed;inset:0;z-index:190;background:var(--ivory);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:38px;transform:translateX(100%);transition:transform .52s var(--ease);pointer-events:none}
-.nav-drawer.open{transform:none;pointer-events:all}
-.nav-drawer a{font-family:var(--serif);font-style:italic;font-size:clamp(30px,6vw,48px);color:var(--espresso);letter-spacing:.04em;opacity:0;transform:translateY(14px);transition:opacity .42s,transform .42s,color .25s}
-.nav-drawer.open a{opacity:1;transform:none}
-.nav-drawer.open a:nth-child(1){transition-delay:.1s}.nav-drawer.open a:nth-child(2){transition-delay:.16s}
-.nav-drawer.open a:nth-child(3){transition-delay:.22s}.nav-drawer.open a:nth-child(4){transition-delay:.28s}
-.nav-drawer.open a:nth-child(5){transition-delay:.34s}
-.nav-drawer a:hover{color:var(--mink)}
-/* PAGE HEADER */
-.wrap{max-width:calc(var(--maxw) + 2*var(--g));margin:0 auto;padding:0 var(--g)}
-.page-header{padding:calc(68px + clamp(34px,5vw,65px)) var(--g) clamp(28px,3.5vw,46px);max-width:calc(var(--maxw) + 2*var(--g));margin:0 auto}
-.ph-bread{display:flex;align-items:center;gap:8px;font-family:var(--ui);font-weight:200;font-size:10px;letter-spacing:.38em;text-transform:uppercase;color:var(--taupe);margin-bottom:20px}
-.ph-bread a{color:var(--taupe);transition:color .2s}.ph-bread a:hover{color:var(--espresso)}.ph-bread span{opacity:.35}
-.ph-grid{display:grid;grid-template-columns:1fr 1fr;align-items:end;gap:clamp(22px,4vw,56px)}
-.ph-title{font-family:var(--serif);font-weight:400;font-size:clamp(38px,5.5vw,72px);line-height:.92;letter-spacing:-.005em;color:var(--espresso);overflow:hidden}
-.ph-title .ln{display:block;overflow:hidden;clip-path:inset(0 0 100% 0);animation:clipUp .95s var(--ease) forwards}
-.ph-title .ln:nth-child(2){animation-delay:.11s}
-.ph-title em{font-style:italic;color:var(--dark-mink)}
-.ph-right{padding-bottom:4px;opacity:0;animation:fadeUp .78s var(--ease) forwards .38s}
-.ph-desc{font-family:var(--serif);font-style:italic;font-weight:400;font-size:clamp(15px,1.5vw,18px);line-height:1.82;color:var(--dark-mink);max-width:330px;margin-left:auto;letter-spacing:.025em}
-.ph-meta{margin-top:12px;display:flex;justify-content:flex-end}
-.ph-count{font-family:var(--ui);font-weight:200;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--mink)}
-.ph-count strong{color:var(--espresso);font-weight:400}
-.ph-divider{height:1px;background:rgba(196,168,130,.18);margin:clamp(20px,2.8vw,36px) var(--g) 0;max-width:var(--maxw);margin-left:auto;margin-right:auto;transform:scaleX(0);transform-origin:left;animation:scaleX1 .92s var(--ease) forwards .52s}
-/* MOBILE CHIPS */
-.m-strip{display:none;padding:clamp(14px,2.5vw,22px) var(--g) 0;overflow-x:auto;gap:8px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-.m-strip::-webkit-scrollbar{display:none}
-.m-chip{flex-shrink:0;display:inline-flex;align-items:center;gap:7px;padding:7px 13px;border:1px solid rgba(196,168,130,.22);font-family:var(--ui);font-weight:300;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--mink);transition:background .24s,color .24s,border-color .24s;white-space:nowrap}
-.m-chip:hover{color:var(--espresso);border-color:rgba(61,31,13,.28)}
-.m-chip[aria-pressed="true"]{background:var(--espresso);color:var(--ivory);border-color:var(--espresso)}
-.m-chip-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;border:1px solid rgba(255,255,255,.25)}
-/* MAIN */
-.main-wrap{max-width:calc(var(--maxw) + 2*var(--g));margin:0 auto;padding:clamp(26px,3.2vw,44px) var(--g) clamp(80px,10vw,120px);display:grid;grid-template-columns:200px 1fr;gap:clamp(26px,3.8vw,56px);align-items:start}
-/* SIDEBAR */
-.sidebar{position:sticky;top:74px;opacity:0;animation:fadeUp .78s var(--ease) forwards .28s}
-.sb-label{font-family:var(--ui);font-weight:200;font-size:9px;letter-spacing:.48em;text-transform:uppercase;color:var(--taupe);padding-bottom:13px;border-bottom:1px solid rgba(196,168,130,.14);margin-bottom:5px}
-.swatch-list{display:flex;flex-direction:column;gap:2px}
-.swatch{display:flex;align-items:center;gap:11px;padding:8px 7px;font-family:var(--ui);font-weight:300;font-size:12px;letter-spacing:.08em;color:var(--mink);transition:background .2s,color .2s;width:100%;text-align:left}
-.swatch:hover{background:rgba(196,168,130,.1);color:var(--espresso)}
-.swatch[aria-pressed="true"]{background:rgba(196,168,130,.14);color:var(--espresso)}
-.sw-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0;border:1px solid rgba(61,31,13,.1);transition:transform .24s var(--ease),box-shadow .24s;position:relative;overflow:hidden}
-.swatch:hover .sw-dot,.swatch[aria-pressed="true"] .sw-dot{transform:scale(1.25);box-shadow:0 2px 8px rgba(61,31,13,.12)}
-.swatch[aria-pressed="true"] .sw-dot::after{content:'';position:absolute;inset:2px;border-radius:50%;border:1.5px solid rgba(255,255,255,.55)}
-.sb-active{margin-top:20px;padding-top:16px;border-top:1px solid rgba(196,168,130,.12);display:none}
-.sb-active-lbl{font-family:var(--ui);font-weight:200;font-size:9px;letter-spacing:.4em;text-transform:uppercase;color:var(--taupe);margin-bottom:9px}
-.sb-pill{display:inline-flex;align-items:center;gap:8px;padding:5px 10px;background:var(--espresso);color:var(--ivory);font-family:var(--ui);font-weight:300;font-size:10px;letter-spacing:.18em;text-transform:uppercase;opacity:0;transform:translateY(4px);transition:opacity .28s,transform .28s}
-.sb-pill.in{opacity:1;transform:none}
-.sb-pill button{color:rgba(250,246,238,.55);font-size:13px;line-height:1;padding:0;transition:color .2s}
-.sb-pill button:hover{color:var(--ivory)}
-/* COLOUR DOTS */
-.co-all{background:conic-gradient(#E8C4B8 0 30%,#6B1E2E 30% 48%,#C8B8D8 48% 65%,#A8C8E8 65% 82%,#EDD98A 82% 100%)}
-.co-blush{background:#E8C4B8}.co-burgundy{background:#6B1E2E}.co-champagne{background:#EDD98A}
-.co-forest{background:#2C4A3C}.co-lavender{background:#C8B8D8}.co-onyx{background:#1A1A1A}
-.co-pearl{background:#F0EDE8;border-color:rgba(61,31,13,.14)!important}
-.co-rosegold{background:linear-gradient(135deg,#E8B4A0,#D4907A)}
-.co-silver{background:linear-gradient(135deg,#D8D8D4,#B8B0AB)}.co-sky{background:#A8C8E8}
-/* GRID AREA */
-.grid-area{opacity:0;animation:fadeUp .78s var(--ease) forwards .32s}
-.toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:clamp(16px,2.4vw,26px)}
-.tb-count{font-family:var(--ui);font-weight:200;font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--mink)}
-.tb-count strong{color:var(--espresso);font-weight:400}
-.sort{font-family:var(--ui);font-weight:300;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--mink);background:none;border:none;border-bottom:1px solid rgba(196,168,130,.22);padding:3px 17px 3px 0;outline:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='9' height='5' viewBox='0 0 9 5' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l3.5 3L8 1' stroke='%237A5C48' stroke-width='1' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 2px center;transition:color .2s;cursor:pointer}
-.sort:hover{color:var(--espresso)}
-/* PRODUCT GRID */
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--gap)}
-.card{--d:0ms;opacity:0;transform:translateY(18px);transition:opacity .52s var(--ease) var(--d),transform .52s var(--ease) var(--d)}
-.card.in{opacity:1;transform:none}
-.card.out{opacity:0!important;transform:translateY(10px)!important;pointer-events:none;transition:opacity .2s ease,transform .2s ease!important}
-.card-link{display:block}
-.card-img{position:relative;overflow:hidden;aspect-ratio:3/4;background:var(--cream)}
-.card-img .gown{width:100%;height:100%;transition:transform .7s var(--ease);will-change:transform;position:relative}
-.card-img .gown::after{content:'';position:absolute;inset:0;background:linear-gradient(108deg,transparent 30%,rgba(255,255,255,.065) 48%,rgba(255,255,255,.028) 52%,transparent 70%);background-size:200% 100%;animation:shimmer 5.5s ease-in-out infinite}
-.card:hover .card-img .gown{transform:scale(1.05)}
-.card-dot{position:absolute;top:11px;left:11px;z-index:1;width:9px;height:9px;border-radius:50%;border:1.5px solid rgba(255,255,255,.65);box-shadow:0 1px 4px rgba(0,0,0,.18)}
-.card-hover{position:absolute;inset:0;display:flex;align-items:flex-end;padding:16px;background:linear-gradient(to top,rgba(14,6,4,.54) 0%,transparent 55%);opacity:0;transition:opacity .32s var(--ease)}
-.card:hover .card-hover{opacity:1}
-.card-enq{display:inline-flex;align-items:center;gap:7px;font-family:var(--ui);font-weight:300;font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--ivory);padding:8px 13px;border:1px solid rgba(250,246,238,.36);background:rgba(14,6,4,.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transform:translateY(6px);opacity:0;transition:opacity .3s var(--ease) .04s,transform .3s var(--ease) .04s,background .2s}
-.card:hover .card-enq{opacity:1;transform:none}
-.card-enq:hover{background:var(--espresso);border-color:var(--espresso)}
-.card-meta{padding:10px 1px 0}
-.card-name{font-family:var(--serif);font-weight:400;font-size:clamp(13px,1.2vw,15px);line-height:1.32;color:var(--espresso);letter-spacing:.02em}
-.card-sub{font-family:var(--ui);font-weight:200;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--mink);margin-top:4px}
-.empty{grid-column:1/-1;padding:68px 20px;text-align:center;display:none}
-.empty.show{display:block}
-.empty-t{font-family:var(--serif);font-style:italic;font-size:20px;color:var(--mink);letter-spacing:.03em}
-/* GOWN GRADIENTS */
-.g-blush1{background:linear-gradient(168deg,#f0d0c4 0%,#dca486 38%,#bc7454 68%,#984c34 100%)}
-.g-sky1{background:linear-gradient(168deg,#cce4f4 0%,#96c0ec 38%,#5694d4 68%,#2e6cb4 100%)}
-.g-pearl1{background:linear-gradient(168deg,#f8f3ec 0%,#ead9b4 40%,#d2b684 68%,#b48c5c 100%)}
-.g-lavender1{background:linear-gradient(168deg,#e0d4f0 0%,#bca4e0 38%,#9474c8 68%,#6c4ca4 100%)}
-.g-lavender2{background:linear-gradient(168deg,#e8d9f4 0%,#c8a6e4 38%,#a47cd0 68%,#7c54b0 100%)}
-.g-blush2{background:linear-gradient(168deg,#f0ccc4 0%,#e0a09c 38%,#c47474 68%,#a04c5c 100%)}
-.g-burgundy1{background:linear-gradient(168deg,#883040 0%,#681828 38%,#480810 68%,#280008 100%)}
-.g-silver1{background:linear-gradient(168deg,#e8e8e6 0%,#c8c8c6 38%,#a8a8a6 68%,#888886 100%)}
-.g-champagne1{background:linear-gradient(168deg,#f6e8c2 0%,#e0c880 38%,#c4a440 68%,#9c7c18 100%)}
-.g-rosegold1{background:linear-gradient(168deg,#f0c6b4 0%,#dc9c84 38%,#c07452 68%,#9c5430 100%)}
-.g-onyx1{background:linear-gradient(168deg,#3a2c2c 0%,#201414 38%,#100808 68%,#040202 100%)}
-.g-forest1{background:linear-gradient(168deg,#486860 0%,#2a4c3c 38%,#162c24 68%,#061414 100%)}
-.g-pearl2{background:linear-gradient(168deg,#fcf8f0 0%,#ecdbc4 40%,#d6bc98 68%,#be9c70 100%)}
-.g-sky2{background:linear-gradient(168deg,#d4eaf8 0%,#a0c8f0 38%,#6ca4e4 68%,#4480cc 100%)}
-.g-burgundy2{background:linear-gradient(168deg,#9e3c54 0%,#781c34 38%,#500810 68%,#280004 100%)}
-.g-silver2{background:linear-gradient(168deg,#eeeeec 0%,#cecece 38%,#aeaeac 68%,#8e8e8c 100%)}
-/* WA */
-.wa{position:fixed;bottom:26px;right:26px;z-index:300;width:50px;height:50px;border-radius:50%;background:#1B5E20;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 18px rgba(0,0,0,.18);transition:transform .32s var(--ease),box-shadow .32s;opacity:0;animation:waIn .7s var(--ease) forwards 1.2s;will-change:transform}
-.wa:hover{transform:scale(1.08) translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,.22)}
-.wa svg{width:22px;height:22px;flex-shrink:0}
-.wa-tip{position:absolute;right:58px;white-space:nowrap;padding:6px 12px;background:var(--ink);color:var(--ivory);font-family:var(--ui);font-weight:300;font-size:10px;letter-spacing:.2em;text-transform:uppercase;pointer-events:none;opacity:0;transform:translateX(6px);transition:opacity .24s,transform .24s;border-radius:1px}
-.wa:hover .wa-tip{opacity:1;transform:none}
-/* RESPONSIVE */
-@media(max-width:1080px){.grid{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:860px){.main-wrap{grid-template-columns:1fr}.sidebar{display:none}.m-strip{display:flex}.grid{grid-template-columns:repeat(2,1fr)}.ph-grid{grid-template-columns:1fr}.ph-right{margin-left:0}.ph-desc{max-width:100%;margin-left:0}.ph-meta{justify-content:flex-start}.nav-links,.nav-book{display:none}.nav-ham{display:flex}}
-@media(max-width:480px){.grid{grid-template-columns:repeat(2,1fr);gap:10px}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blooms Gown — Luxury Dress Rental, Kuala Lumpur</title>
+  <meta name="description" content="400+ designer gowns for rent in Kuala Lumpur. Prom, Bridal, ROM, Dinner, Awards & Photoshoot. By appointment. Blooms Gown boutique.">
+  <link rel="preconnect" href="https://fonts.cdnfonts.com">
+  <link href="https://fonts.cdnfonts.com/css/tex-gyre-termes" rel="stylesheet">
+  <script src="data/products.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ivory: #FAF6EE;
+      --cream: #F2E8D5;
+      --sand: #E5D0B0;
+      --taupe: #C4A882;
+      --text: #1A0C06;
+      --head: #2C1208;
+      --sub: #4A2010;
+      --accent: #8B5E40;
+      --dark: #150804;
+      --font: 'TeX Gyre Termes', 'Times New Roman', serif;
+      --ease-snap: cubic-bezier(.16,1,.3,1);
+      --ease-smooth: cubic-bezier(.4,0,.2,1);
+      --nav-h: 72px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      background: var(--ivory);
+      color: var(--text);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: var(--font); cursor: pointer; border: none; background: none; }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--dark); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+
+    /* ═══════ NAV ═══════ */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: var(--nav-h);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px;
+      transition: background 0.5s var(--ease-smooth), backdrop-filter 0.5s var(--ease-smooth), box-shadow 0.5s var(--ease-smooth);
+    }
+    .nav.scrolled {
+      background: rgba(21,8,4,0.88);
+      backdrop-filter: blur(18px) saturate(1.4);
+      -webkit-backdrop-filter: blur(18px) saturate(1.4);
+      box-shadow: 0 1px 0 rgba(196,168,130,0.12);
+    }
+    .nav-logo { display: flex; flex-direction: column; line-height: 1; gap: 1px; }
+    .nav-logo .logo-blooms { font-size: 14px; font-variant: small-caps; letter-spacing: 0.22em; color: var(--sand); text-transform: lowercase; }
+    .nav-logo .logo-gown { font-size: 20px; font-style: italic; color: var(--ivory); letter-spacing: 0.04em; }
+
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a { font-size: 13px; letter-spacing: 0.12em; color: rgba(250,246,238,0.75); transition: color 0.25s var(--ease-smooth); text-transform: uppercase; }
+    .nav-links a:hover { color: var(--ivory); }
+
+    .nav-actions { display: flex; align-items: center; gap: 20px; }
+    .nav-wa {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 12px; letter-spacing: 0.1em; color: var(--sand); text-transform: uppercase;
+      border: 1px solid rgba(196,168,130,0.3); padding: 8px 18px; border-radius: 100px;
+      transition: all 0.3s var(--ease-smooth);
+    }
+    .nav-wa:hover { background: rgba(196,168,130,0.1); border-color: var(--taupe); color: var(--ivory); }
+
+    .nav-burger { display: none; flex-direction: column; gap: 5px; padding: 8px; cursor: pointer; }
+    .nav-burger span { display: block; width: 22px; height: 1.5px; background: var(--ivory); transition: all 0.35s var(--ease-snap); transform-origin: center; }
+    .nav-burger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-burger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav-burger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    .drawer {
+      position: fixed; inset: 0; z-index: 99;
+      background: var(--dark);
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 48px;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.45s var(--ease-snap);
+    }
+    .drawer.open { opacity: 1; pointer-events: all; }
+    .drawer nav { display: flex; flex-direction: column; gap: 8px; }
+    .drawer nav a {
+      font-size: clamp(36px, 7vw, 64px); font-style: italic;
+      color: var(--ivory); letter-spacing: -0.01em; line-height: 1.15;
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.45s var(--ease-snap), transform 0.45s var(--ease-snap), color 0.2s;
+    }
+    .drawer nav a:hover { color: var(--taupe); }
+    .drawer.open nav a { opacity: 1; transform: translateY(0); }
+    .drawer.open nav a:nth-child(1) { transition-delay: 0.08s; }
+    .drawer.open nav a:nth-child(2) { transition-delay: 0.13s; }
+    .drawer.open nav a:nth-child(3) { transition-delay: 0.18s; }
+    .drawer.open nav a:nth-child(4) { transition-delay: 0.23s; }
+    .drawer.open nav a:nth-child(5) { transition-delay: 0.28s; }
+    .drawer.open nav a:nth-child(6) { transition-delay: 0.33s; }
+    .drawer-footer { position: absolute; bottom: 48px; left: 48px; font-size: 12px; letter-spacing: 0.15em; color: rgba(250,246,238,0.35); text-transform: uppercase; }
+
+    /* ═══════ HERO ═══════ */
+    .hero {
+      min-height: 100svh;
+      background: linear-gradient(165deg, #1e0d06 0%, #150804 40%, #0e0502 100%);
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 0 48px;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 70% 50%, rgba(139,94,64,0.12) 0%, transparent 65%),
+                  radial-gradient(ellipse 40% 80% at 20% 80%, rgba(196,168,130,0.06) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .hero-pills { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 40px; position: relative; }
+    .hero-pill {
+      font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(196,168,130,0.7); border: 1px solid rgba(196,168,130,0.2);
+      padding: 6px 16px; border-radius: 100px;
+      opacity: 0; transform: translateY(16px);
+      animation: pillIn 0.7s var(--ease-snap) forwards;
+    }
+    .hero-pill:nth-child(1){animation-delay:0.1s}
+    .hero-pill:nth-child(2){animation-delay:0.16s}
+    .hero-pill:nth-child(3){animation-delay:0.22s}
+    .hero-pill:nth-child(4){animation-delay:0.28s}
+    .hero-pill:nth-child(5){animation-delay:0.34s}
+    .hero-pill:nth-child(6){animation-delay:0.40s}
+    @keyframes pillIn { to { opacity: 1; transform: translateY(0); } }
+
+    .hero-main { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 48px; }
+
+    .hero-title .line { overflow: hidden; display: block; }
+    .hero-title .line-inner { display: block; transform: translateY(110%); animation: lineReveal 1s var(--ease-snap) forwards; }
+    .hero-title .line:nth-child(1) .line-inner { animation-delay: 0.3s; }
+    .hero-title .line:nth-child(2) .line-inner { animation-delay: 0.45s; }
+    @keyframes lineReveal { to { transform: translateY(0); } }
+
+    .hero-t1 { font-size: clamp(80px,14vw,180px); font-weight: 400; color: var(--ivory); letter-spacing: -0.03em; line-height: 0.92; font-variant: small-caps; text-transform: lowercase; }
+    .hero-t2 { font-size: clamp(80px,14vw,180px); font-weight: 400; font-style: italic; color: var(--taupe); letter-spacing: -0.02em; line-height: 0.92; }
+
+    .hero-tagline { font-size: clamp(14px,1.6vw,18px); color: rgba(196,168,130,0.65); letter-spacing: 0.06em; margin-top: 28px; opacity: 0; animation: fadeUp 0.8s var(--ease-snap) 0.75s forwards; }
+
+    .hero-ctas { display: flex; gap: 14px; margin-top: 40px; opacity: 0; animation: fadeUp 0.8s var(--ease-snap) 0.9s forwards; }
+
+    .btn-dark {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--ivory); color: var(--dark);
+      font-size: 13px; font-family: var(--font); letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 14px 28px; border-radius: 100px; border: none; cursor: pointer;
+      transition: all 0.3s var(--ease-smooth);
+    }
+    .btn-dark:hover { background: var(--sand); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
+
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: transparent; color: var(--ivory);
+      font-size: 13px; font-family: var(--font); letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 13px 28px; border-radius: 100px; border: 1px solid rgba(250,246,238,0.25); cursor: pointer;
+      transition: all 0.3s var(--ease-smooth);
+    }
+    .btn-ghost:hover { background: rgba(250,246,238,0.08); border-color: rgba(250,246,238,0.5); transform: translateY(-2px); }
+
+    .hero-stats { display: flex; flex-direction: column; gap: 28px; opacity: 0; animation: fadeIn 1s var(--ease-snap) 1s forwards; }
+    .hero-stat { text-align: right; }
+    .hero-stat .stat-num { display: block; font-size: 32px; color: var(--ivory); letter-spacing: -0.02em; line-height: 1; }
+    .hero-stat .stat-label { display: block; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(196,168,130,0.5); margin-top: 4px; }
+
+    .hero-scroll { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 10px; opacity: 0; animation: fadeIn 1s var(--ease-snap) 1.4s forwards; }
+    .hero-scroll span { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(196,168,130,0.4); }
+    .hero-scroll-line { width: 1px; height: 48px; background: linear-gradient(to bottom, rgba(196,168,130,0.4), transparent); animation: scrollPulse 2s ease-in-out infinite; }
+    @keyframes scrollPulse { 0%,100%{opacity:.4;transform:scaleY(1)} 50%{opacity:1;transform:scaleY(0.6)} }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes fadeIn { to { opacity: 1; } }
+
+    /* ═══════ MARQUEE ═══════ */
+    .marquee-strip { background: var(--dark); padding: 16px 0; overflow: hidden; border-top: 1px solid rgba(196,168,130,0.1); border-bottom: 1px solid rgba(196,168,130,0.1); }
+    .marquee-track { display: flex; animation: marqueeScroll 28s linear infinite; white-space: nowrap; }
+    .marquee-item { display: flex; align-items: center; gap: 40px; padding-right: 40px; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(196,168,130,0.5); flex-shrink: 0; }
+    .marquee-item .sep { color: rgba(196,168,130,0.25); font-size: 16px; }
+    @keyframes marqueeScroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+    /* ═══════ SHARED ═══════ */
+    .section { padding: 120px 48px; }
+    .section-sm { padding: 80px 48px; }
+
+    .eyebrow { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; display: block; }
+
+    .reveal { clip-path: inset(0 0 100% 0); transition: clip-path 0.9s var(--ease-snap); }
+    .reveal.visible { clip-path: inset(0 0 0% 0); }
+
+    .fade-up { opacity: 0; transform: translateY(40px); transition: opacity 0.8s var(--ease-snap), transform 0.8s var(--ease-snap); }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    .section-title { font-size: clamp(36px,5vw,64px); font-weight: 400; color: var(--head); letter-spacing: -0.02em; line-height: 1.1; }
+    .section-title em { font-style: italic; color: var(--accent); }
+
+    /* ═══════ OCCASIONS ═══════ */
+    .occasions { background: var(--cream); }
+    .occasions-header { text-align: center; margin-bottom: 64px; }
+    .occasions-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+
+    .occ-card { position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 3/2; cursor: pointer; display: block; }
+    .occ-card-bg { position: absolute; inset: 0; transition: transform 0.6s var(--ease-smooth); }
+    .occ-card:hover .occ-card-bg { transform: scale(1.06); }
+    .obg-prom       { background: linear-gradient(135deg,#3a1f5c,#7b4fa6); }
+    .obg-bridal     { background: linear-gradient(135deg,#e8ddd0,#c9b49a); }
+    .obg-rom        { background: linear-gradient(135deg,#d4a5a5,#a67070); }
+    .obg-dinner     { background: linear-gradient(135deg,#1a1208,#4a3520); }
+    .obg-awards     { background: linear-gradient(135deg,#8a7040,#c4a060); }
+    .obg-photoshoot { background: linear-gradient(135deg,#2a3a4a,#4a6a8a); }
+
+    .occ-card-inner { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; padding: 28px; background: linear-gradient(to top, rgba(21,8,4,0.75) 0%, transparent 55%); }
+    .occ-label { transform: translateY(8px); transition: transform 0.4s var(--ease-snap); }
+    .occ-card:hover .occ-label { transform: translateY(0); }
+    .occ-label h3 { font-size: 22px; font-weight: 400; color: var(--ivory); letter-spacing: -0.01em; }
+    .occ-label span { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(250,246,238,0.5); display: block; margin-top: 4px; opacity: 0; transform: translateY(6px); transition: opacity 0.4s var(--ease-snap) 0.05s, transform 0.4s var(--ease-snap) 0.05s; }
+    .occ-card:hover .occ-label span { opacity: 1; transform: translateY(0); }
+
+    /* ═══════ ABOUT ═══════ */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .about-heading { font-size: clamp(32px,4vw,52px); font-weight: 400; color: var(--head); letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 28px; }
+    .about-heading em { font-style: italic; color: var(--accent); }
+    .about-body { font-size: 17px; line-height: 1.75; color: var(--sub); margin-bottom: 36px; max-width: 480px; }
+    .btn-outline { display: inline-flex; align-items: center; gap: 10px; font-size: 13px; font-family: var(--font); letter-spacing: 0.1em; text-transform: uppercase; color: var(--head); border: 1.5px solid var(--taupe); padding: 13px 28px; border-radius: 100px; transition: all 0.3s var(--ease-smooth); }
+    .btn-outline:hover { background: var(--head); color: var(--ivory); border-color: var(--head); transform: translateY(-2px); }
+    .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .about-stat-tile { background: var(--cream); border: 1px solid var(--sand); border-radius: 12px; padding: 28px 24px; text-align: center; }
+    .about-stat-tile .tile-num { display: block; font-size: 40px; color: var(--head); letter-spacing: -0.03em; line-height: 1; margin-bottom: 8px; }
+    .about-stat-tile .tile-label { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); }
+
+    /* ═══════ FEATURED ═══════ */
+    .featured { background: var(--dark); }
+    .featured-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 56px; }
+    .featured-title { font-size: clamp(36px,5vw,64px); font-weight: 400; color: var(--ivory); letter-spacing: -0.03em; line-height: 1.05; }
+    .featured-title em { font-style: italic; color: var(--taupe); }
+    .featured-link { font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--taupe); display: flex; align-items: center; gap: 8px; transition: color 0.2s; white-space: nowrap; padding-bottom: 4px; }
+    .featured-link:hover { color: var(--sand); }
+
+    .product-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; }
+    .product-card { display: block; cursor: pointer; opacity: 0; transform: translateY(32px); transition: opacity 0.7s var(--ease-snap), transform 0.7s var(--ease-snap); }
+    .product-card.visible { opacity: 1; transform: translateY(0); }
+
+    .card-img-wrap { position: relative; border-radius: 8px; overflow: hidden; aspect-ratio: 2/3; background: var(--sub); }
+    .card-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease-smooth); }
+    .product-card:hover .card-img { transform: scale(1.05); }
+    .card-overlay { position: absolute; inset: 0; background: rgba(21,8,4,0.5); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.35s var(--ease-smooth); }
+    .product-card:hover .card-overlay { opacity: 1; }
+    .card-overlay-text { font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ivory); display: flex; align-items: center; gap: 8px; }
+
+    .card-dot { position: absolute; top: 14px; left: 14px; width: 10px; height: 10px; border-radius: 50%; }
+    .co-lavender  { background: #b99fd6; }
+    .co-blush     { background: #e8b4b8; }
+    .co-silver    { background: #c8cfd8; }
+    .co-champagne { background: #d4b896; }
+    .co-pearl     { background: #e8e0d0; border: 1px solid rgba(0,0,0,0.1); }
+    .co-dustypink { background: #d4a0a0; }
+    .co-burgundy  { background: #8b2020; }
+    .co-rose      { background: #d4708a; }
+    .co-floral    { background: linear-gradient(135deg,#e8b4b8,#d4708a); }
+
+    .card-badge { position: absolute; top: 14px; right: 14px; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--dark); background: var(--sand); padding: 4px 10px; border-radius: 100px; }
+    .card-meta { padding: 16px 4px 0; }
+    .card-name { font-size: 14px; color: var(--ivory); letter-spacing: 0.02em; line-height: 1.4; margin-bottom: 6px; }
+    .card-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+    .card-tag { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(196,168,130,0.5); }
+
+    /* ═══════ HOW IT WORKS ═══════ */
+    .how { background: var(--head); }
+    .how-header { text-align: center; margin-bottom: 72px; }
+    .how-title { font-size: clamp(32px,4.5vw,56px); font-weight: 400; color: var(--ivory); letter-spacing: -0.02em; }
+    .how-subtitle { font-size: 16px; color: rgba(196,168,130,0.55); margin-top: 14px; letter-spacing: 0.04em; }
+    .how-steps { display: grid; grid-template-columns: repeat(4,1fr); gap: 32px; position: relative; }
+    .how-steps::before { content: ''; position: absolute; top: 28px; left: calc(12.5% + 20px); right: calc(12.5% + 20px); height: 1px; background: linear-gradient(to right, transparent, rgba(196,168,130,0.2) 20%, rgba(196,168,130,0.2) 80%, transparent); }
+    .how-step { text-align: center; position: relative; }
+    .step-num { font-size: 11px; letter-spacing: 0.2em; color: rgba(196,168,130,0.35); text-transform: uppercase; margin-bottom: 16px; }
+    .step-icon { font-size: 28px; margin-bottom: 20px; display: block; color: var(--taupe); }
+    .step-title { font-size: 20px; color: var(--ivory); letter-spacing: -0.01em; margin-bottom: 12px; }
+    .step-body { font-size: 14px; font-style: italic; color: rgba(196,168,130,0.5); line-height: 1.65; }
+
+    /* ═══════ GALLERY ═══════ */
+    .gallery { background: var(--cream); }
+    .gallery-header { text-align: center; margin-bottom: 48px; }
+    .mosaic { display: grid; grid-template-columns: 1.2fr 0.8fr 0.8fr 1.2fr; gap: 12px; height: 520px; }
+    .mosaic-item { position: relative; border-radius: 10px; overflow: hidden; background: var(--sand); cursor: pointer; }
+    .mosaic-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease-smooth); }
+    .mosaic-item:hover img { transform: scale(1.05); }
+    .mosaic-label { position: absolute; bottom: 0; left: 0; right: 0; padding: 20px 20px 16px; background: linear-gradient(to top, rgba(21,8,4,0.65), transparent); font-size: 13px; color: var(--ivory); letter-spacing: 0.06em; transform: translateY(8px); opacity: 0; transition: all 0.4s var(--ease-snap); }
+    .mosaic-item:hover .mosaic-label { opacity: 1; transform: translateY(0); }
+
+    /* ═══════ REVIEWS ═══════ */
+    .reviews { background: var(--ivory); overflow: hidden; }
+    .reviews-header { text-align: center; margin-bottom: 56px; }
+    .reviews-track-wrap { overflow: hidden; -webkit-mask: linear-gradient(to right, transparent, black 12%, black 88%, transparent); mask: linear-gradient(to right, transparent, black 12%, black 88%, transparent); }
+    .reviews-track { display: flex; gap: 24px; animation: reviewsScroll 40s linear infinite; }
+    .reviews-track:hover { animation-play-state: paused; }
+    @keyframes reviewsScroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+    .review-card { flex-shrink: 0; width: 340px; background: var(--cream); border: 1px solid var(--sand); border-radius: 12px; padding: 28px; }
+    .review-stars { color: var(--accent); font-size: 14px; letter-spacing: 3px; margin-bottom: 14px; }
+    .review-text { font-size: 15px; font-style: italic; color: var(--sub); line-height: 1.7; margin-bottom: 20px; }
+    .review-author { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--taupe); }
+    .review-occ { font-size: 11px; color: rgba(74,32,16,0.45); margin-top: 3px; letter-spacing: 0.08em; }
+
+    /* ═══════ CTA BANNER ═══════ */
+    .cta-banner { background: linear-gradient(135deg,#150804,#2c1208 60%,#1a0c06); text-align: center; padding: 120px 48px; position: relative; overflow: hidden; }
+    .cta-banner::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 70% at 50% 50%, rgba(139,94,64,0.1), transparent 70%); pointer-events: none; }
+    .cta-banner-title { font-size: clamp(36px,6vw,76px); font-weight: 400; color: var(--ivory); letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 48px; position: relative; }
+    .cta-banner-title em { font-style: italic; color: var(--taupe); }
+    .cta-banner-btns { display: flex; gap: 14px; justify-content: center; position: relative; }
+
+    /* ═══════ CONTACT ═══════ */
+    .contact { background: var(--cream); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+    .contact-heading { font-size: clamp(28px,3.5vw,44px); font-weight: 400; color: var(--head); letter-spacing: -0.02em; margin-bottom: 40px; }
+    .contact-items { display: flex; flex-direction: column; gap: 28px; }
+    .contact-item-label { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+    .contact-item-value { font-size: 15px; color: var(--sub); line-height: 1.6; }
+    .contact-item-value a { color: var(--sub); text-decoration: underline; text-underline-offset: 3px; }
+    .contact-item-value a:hover { color: var(--head); }
+    .map-placeholder { background: var(--sand); border-radius: 12px; overflow: hidden; height: 380px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 16px; border: 1px solid var(--taupe); position: relative; }
+    .map-pattern { position: absolute; inset: 0; opacity: 0.06; background-image: linear-gradient(rgba(44,18,8,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(44,18,8,0.5) 1px, transparent 1px); background-size: 32px 32px; }
+    .map-pin { font-size: 32px; position: relative; }
+    .map-label { font-size: 16px; color: var(--head); letter-spacing: -0.01em; position: relative; }
+    .map-sub { font-size: 13px; color: var(--accent); letter-spacing: 0.06em; position: relative; }
+    .map-link { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sub); border-bottom: 1px solid var(--taupe); padding-bottom: 2px; position: relative; transition: color 0.2s; }
+    .map-link:hover { color: var(--head); }
+
+    /* ═══════ FOOTER ═══════ */
+    .footer { background: var(--dark); padding: 64px 48px 40px; }
+    .footer-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 40px; margin-bottom: 56px; padding-bottom: 56px; border-bottom: 1px solid rgba(196,168,130,0.1); }
+    .footer-logo .logo-blooms { display: block; font-size: 13px; font-variant: small-caps; letter-spacing: 0.22em; color: var(--sand); text-transform: lowercase; }
+    .footer-logo .logo-gown { display: block; font-size: 28px; font-style: italic; color: var(--ivory); letter-spacing: 0.04em; line-height: 1.1; }
+    .footer-tagline { font-size: 13px; color: rgba(196,168,130,0.4); margin-top: 10px; letter-spacing: 0.04em; }
+    .footer-links { display: flex; gap: 64px; }
+    .footer-col h4 { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(196,168,130,0.4); margin-bottom: 20px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .footer-col ul a { font-size: 14px; color: rgba(250,246,238,0.55); transition: color 0.2s; }
+    .footer-col ul a:hover { color: var(--ivory); }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .footer-copy { font-size: 12px; color: rgba(196,168,130,0.25); letter-spacing: 0.06em; }
+    .footer-bottom-links { display: flex; gap: 24px; }
+    .footer-bottom-links a { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(196,168,130,0.3); transition: color 0.2s; }
+    .footer-bottom-links a:hover { color: var(--taupe); }
+
+    /* ═══════ WA FLOAT ═══════ */
+    .wa-float { position: fixed; bottom: 32px; right: 32px; z-index: 90; width: 56px; height: 56px; border-radius: 50%; background: #25D366; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(37,211,102,0.4); transition: transform 0.3s var(--ease-snap), box-shadow 0.3s var(--ease-snap); }
+    .wa-float:hover { transform: scale(1.1) translateY(-2px); box-shadow: 0 8px 28px rgba(37,211,102,0.5); }
+    .wa-float svg { width: 28px; height: 28px; fill: white; }
+
+    /* ═══════ RESPONSIVE ═══════ */
+    @media (max-width: 1024px) {
+      .product-grid { grid-template-columns: repeat(2,1fr); }
+      .how-steps { grid-template-columns: repeat(2,1fr); }
+      .how-steps::before { display: none; }
+      .mosaic { grid-template-columns: 1fr 1fr; height: auto; }
+      .mosaic-item { aspect-ratio: 1/1; }
+    }
+    @media (max-width: 768px) {
+      :root { --nav-h: 60px; }
+      .nav { padding: 0 20px; }
+      .nav-links, .nav-wa { display: none; }
+      .nav-burger { display: flex; }
+      .hero { padding: 0 20px; }
+      .hero-main { grid-template-columns: 1fr; }
+      .hero-stats { display: none; }
+      .section { padding: 80px 20px; }
+      .section-sm { padding: 60px 20px; }
+      .occasions-grid { grid-template-columns: repeat(2,1fr); }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .about-stats { grid-template-columns: repeat(2,1fr); }
+      .featured-header { flex-direction: column; align-items: flex-start; gap: 20px; }
+      .product-grid { grid-template-columns: repeat(2,1fr); gap: 12px; }
+      .how-steps { grid-template-columns: 1fr 1fr; }
+      .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+      .footer-top { flex-direction: column; }
+      .footer-links { flex-direction: column; gap: 32px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+      .hero-ctas { flex-direction: column; align-items: flex-start; }
+      .cta-banner-btns { flex-direction: column; align-items: center; }
+      .cta-banner { padding: 80px 20px; }
+    }
+    @media (max-width: 480px) {
+      .hero-t1, .hero-t2 { font-size: clamp(64px,18vw,80px); }
+      .occasions-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .product-grid { grid-template-columns: repeat(2,1fr); gap: 10px; }
+      .how-steps { grid-template-columns: 1fr; }
+      .mosaic { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
-<nav class="nav-drawer" id="drawer" aria-label="Mobile navigation">
-  <a href="./bloomsgown_premium.html" onclick="closeNav()">Home</a>
-  <a href="#" aria-current="page" onclick="closeNav()">Collections</a>
-  <a href="./bloomsgown_premium.html#about" onclick="closeNav()">About</a>
-  <a href="./bloomsgown_premium.html#faq" onclick="closeNav()">FAQ</a>
-  <a href="https://wa.link/bloomsgown" target="_blank" rel="noopener" onclick="closeNav()">Book Now</a>
-</nav>
-<nav id="nav" aria-label="Primary navigation">
-  <a href="./bloomsgown_premium.html" class="nav-logo" aria-label="Blooms Gown &amp; Dress Rental — Home">
-    <span class="nav-logo-top">BLOOMS</span><span class="nav-logo-script">gown</span>
-  </a>
-  <ul class="nav-links" role="list">
-    <li><a href="./bloomsgown_premium.html">Home</a></li>
-    <li><a href="#" aria-current="page">Collections</a></li>
-    <li><a href="./bloomsgown_premium.html#about">About</a></li>
-    <li><a href="./bloomsgown_premium.html#faq">FAQ</a></li>
-  </ul>
-  <a href="https://wa.link/bloomsgown" class="nav-book" target="_blank" rel="noopener">Book Now</a>
-  <button class="nav-ham" id="ham" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
-</nav>
-<header class="page-header">
-  <nav class="ph-bread" aria-label="Breadcrumb">
-    <a href="./bloomsgown_premium.html">Home</a><span aria-hidden="true">›</span><span aria-current="page">Collections</span>
-  </nav>
-  <div class="ph-grid">
-    <div>
-      <h1 class="ph-title"><span class="ln">Our</span><span class="ln"><em>Collections</em></span></h1>
+
+  <!-- NAV -->
+  <header class="nav" id="nav" role="banner">
+    <a href="index.html" class="nav-logo" aria-label="Blooms Gown Home">
+      <span class="logo-blooms">Blooms</span>
+      <span class="logo-gown">gown</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="collections.html">Collections</a></li>
+      <li><a href="collections.html?occasion=prom">Prom</a></li>
+      <li><a href="collections.html?occasion=bridal">Bridal</a></li>
+      <li><a href="collections.html?occasion=dinner">Dinner</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="https://wa.link/bloomsgown" target="_blank" rel="noopener" class="nav-wa">Book Appointment</a>
+      <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
-    <div class="ph-right">
-      <p class="ph-desc">Each gown is handpicked for the woman who deserves to be remembered. Browse by colour and find your perfect piece.</p>
-      <div class="ph-meta"><p class="ph-count"><strong id="count">16</strong>&nbsp;gowns available</p></div>
-    </div>
+  </header>
+
+  <!-- DRAWER -->
+  <div class="drawer" id="drawer" role="dialog" aria-label="Navigation menu">
+    <nav>
+      <a href="collections.html">Collections</a>
+      <a href="collections.html?occasion=prom">Prom Night</a>
+      <a href="collections.html?occasion=bridal">Bridal</a>
+      <a href="collections.html?occasion=dinner">Dinner &amp; Gala</a>
+      <a href="collections.html?occasion=awards">Awards Night</a>
+      <a href="https://wa.link/bloomsgown" target="_blank" rel="noopener">Book Appointment ↗</a>
+    </nav>
+    <p class="drawer-footer">Blooms Gown · Kuala Lumpur</p>
   </div>
-</header>
-<div class="ph-divider" role="separator" aria-hidden="true"></div>
-<div class="m-strip" role="group" aria-label="Filter by colour" id="mStrip">
-  <button class="m-chip" data-color="all" aria-pressed="true"><span class="m-chip-dot co-all" aria-hidden="true"></span>All</button>
-  <button class="m-chip" data-color="blush" aria-pressed="false"><span class="m-chip-dot co-blush" aria-hidden="true"></span>Blush</button>
-  <button class="m-chip" data-color="burgundy" aria-pressed="false"><span class="m-chip-dot co-burgundy" aria-hidden="true"></span>Burgundy</button>
-  <button class="m-chip" data-color="champagne" aria-pressed="false"><span class="m-chip-dot co-champagne" aria-hidden="true"></span>Champagne</button>
-  <button class="m-chip" data-color="forest" aria-pressed="false"><span class="m-chip-dot co-forest" aria-hidden="true"></span>Forest</button>
-  <button class="m-chip" data-color="lavender" aria-pressed="false"><span class="m-chip-dot co-lavender" aria-hidden="true"></span>Lavender</button>
-  <button class="m-chip" data-color="onyx" aria-pressed="false"><span class="m-chip-dot co-onyx" aria-hidden="true"></span>Onyx</button>
-  <button class="m-chip" data-color="pearl" aria-pressed="false"><span class="m-chip-dot co-pearl" aria-hidden="true"></span>Pearl</button>
-  <button class="m-chip" data-color="rosegold" aria-pressed="false"><span class="m-chip-dot co-rosegold" aria-hidden="true"></span>Rose Gold</button>
-  <button class="m-chip" data-color="silver" aria-pressed="false"><span class="m-chip-dot co-silver" aria-hidden="true"></span>Silver</button>
-  <button class="m-chip" data-color="sky" aria-pressed="false"><span class="m-chip-dot co-sky" aria-hidden="true"></span>Sky</button>
-</div>
-<div class="main-wrap">
-  <aside class="sidebar" aria-label="Filter options">
-    <div class="sb-label">Browse by Colour</div>
-    <div class="swatch-list" role="group" aria-label="Colour filters" id="swatchList">
-      <button class="swatch" data-color="all" aria-pressed="true"><span class="sw-dot co-all" aria-hidden="true"></span>All Gowns</button>
-      <button class="swatch" data-color="blush" aria-pressed="false"><span class="sw-dot co-blush" aria-hidden="true"></span>Blush</button>
-      <button class="swatch" data-color="burgundy" aria-pressed="false"><span class="sw-dot co-burgundy" aria-hidden="true"></span>Burgundy</button>
-      <button class="swatch" data-color="champagne" aria-pressed="false"><span class="sw-dot co-champagne" aria-hidden="true"></span>Champagne</button>
-      <button class="swatch" data-color="forest" aria-pressed="false"><span class="sw-dot co-forest" aria-hidden="true"></span>Forest</button>
-      <button class="swatch" data-color="lavender" aria-pressed="false"><span class="sw-dot co-lavender" aria-hidden="true"></span>Lavender</button>
-      <button class="swatch" data-color="onyx" aria-pressed="false"><span class="sw-dot co-onyx" aria-hidden="true"></span>Onyx</button>
-      <button class="swatch" data-color="pearl" aria-pressed="false"><span class="sw-dot co-pearl" aria-hidden="true"></span>Pearl</button>
-      <button class="swatch" data-color="rosegold" aria-pressed="false"><span class="sw-dot co-rosegold" aria-hidden="true"></span>Rose Gold</button>
-      <button class="swatch" data-color="silver" aria-pressed="false"><span class="sw-dot co-silver" aria-hidden="true"></span>Silver</button>
-      <button class="swatch" data-color="sky" aria-pressed="false"><span class="sw-dot co-sky" aria-hidden="true"></span>Sky</button>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="hero" aria-label="Hero">
+      <div class="hero-pills">
+        <span class="hero-pill">Prom</span>
+        <span class="hero-pill">Bridal</span>
+        <span class="hero-pill">ROM</span>
+        <span class="hero-pill">Dinner</span>
+        <span class="hero-pill">Awards</span>
+        <span class="hero-pill">Photoshoot</span>
+      </div>
+      <div class="hero-main">
+        <div>
+          <h1 class="hero-title" aria-label="Blooms Gown">
+            <span class="line"><span class="line-inner hero-t1">Blooms</span></span>
+            <span class="line"><span class="line-inner hero-t2">Gown</span></span>
+          </h1>
+          <p class="hero-tagline">400+ designer gowns. One boutique. Kuala Lumpur.</p>
+          <div class="hero-ctas">
+            <a href="collections.html" class="btn-dark">Browse Collection</a>
+            <a href="https://wa.link/bloomsgown" target="_blank" rel="noopener" class="btn-ghost">Book Appointment</a>
+          </div>
+        </div>
+        <div class="hero-stats" aria-label="Key statistics">
+          <div class="hero-stat">
+            <span class="stat-num">400+</span>
+            <span class="stat-label">Gowns</span>
+          </div>
+          <div class="hero-stat">
+            <span class="stat-num">21K+</span>
+            <span class="stat-label">Followers</span>
+          </div>
+          <div class="hero-stat">
+            <span class="stat-num">5&#9733;</span>
+            <span class="stat-label">Reviews</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-scroll" aria-hidden="true">
+        <span>Scroll</span>
+        <div class="hero-scroll-line"></div>
+      </div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee-strip" aria-hidden="true">
+      <div class="marquee-track">
+        <div class="marquee-item">
+          <span>Designer Rental</span><span class="sep">·</span>
+          <span>Prom Night</span><span class="sep">·</span>
+          <span>Bridal</span><span class="sep">·</span>
+          <span>ROM</span><span class="sep">·</span>
+          <span>Dinner &amp; Gala</span><span class="sep">·</span>
+          <span>Awards Night</span><span class="sep">·</span>
+          <span>By Appointment</span><span class="sep">·</span>
+          <span>Kuala Lumpur</span><span class="sep">·</span>
+        </div>
+        <div class="marquee-item" aria-hidden="true">
+          <span>Designer Rental</span><span class="sep">·</span>
+          <span>Prom Night</span><span class="sep">·</span>
+          <span>Bridal</span><span class="sep">·</span>
+          <span>ROM</span><span class="sep">·</span>
+          <span>Dinner &amp; Gala</span><span class="sep">·</span>
+          <span>Awards Night</span><span class="sep">·</span>
+          <span>By Appointment</span><span class="sep">·</span>
+          <span>Kuala Lumpur</span><span class="sep">·</span>
+        </div>
+      </div>
     </div>
-    <div class="sb-active" id="sbActive" aria-live="polite">
-      <div class="sb-active-lbl">Active Filter</div>
-      <div class="sb-pill" id="sbPill"><span id="sbPillText">All</span><button onclick="setFilter('all')" aria-label="Clear filter">×</button></div>
+
+    <!-- OCCASIONS GRID -->
+    <section class="section occasions" aria-labelledby="occ-heading">
+      <div class="occasions-header">
+        <span class="eyebrow fade-up">Dress the Occasion</span>
+        <h2 class="section-title reveal" id="occ-heading">Every moment has <em>its gown.</em></h2>
+      </div>
+      <div class="occasions-grid">
+        <a href="collections.html?occasion=prom" class="occ-card fade-up">
+          <div class="occ-card-bg obg-prom"></div>
+          <div class="occ-card-inner"><div class="occ-label"><h3>Prom Night</h3><span>Make it legendary</span></div></div>
+        </a>
+        <a href="collections.html?occasion=bridal" class="occ-card fade-up" style="transition-delay:.06s">
+          <div class="occ-card-bg obg-bridal"></div>
+          <div class="occ-card-inner"><div class="occ-label"><h3>Bridal</h3><span>Your day, your gown</span></div></div>
+        </a>
+        <a href="collections.html?occasion=rom" class="occ-card fade-up" style="transition-delay:.12s">
+          <div class="occ-card-bg obg-rom"></div>
+          <div class="occ-card-inner"><div class="occ-label"><h3>ROM &amp; Solemnisation</h3><span>Quietly breathtaking</span></div></div>
+        </a>
+        <a href="collections.html?occasion=dinner" class="occ-card fade-up" style="transition-delay:.18s">
+          <div class="occ-card-bg obg-dinner"></div>
+          <div class="occ-card-inner"><div class="occ-label"><h3>Dinner &amp; Gala</h3><span>Walk in. Own the room.</span></div></div>
+        </a>
+        <a href="collections.html?occasion=awards" class="occ-card fade-up" style="transition-delay:.24s">
+          <div class="occ-card-bg obg-awards"></div>
+          <div class="occ-card-inner"><div class="occ-label"><h3>Awards Night</h3><span>Dressed for the moment</span></div></div>
+        </a>
+        <a href="collections.html?occasion=photoshoot" class="occ-card fade-up" style="transition-delay:.30s">
+          <div class="occ-card-bg obg-photoshoot"></div>
+          <div class="occ-card-inner"><div class="occ-label"><h3>Photoshoot</h3><span>Frame every angle</span></div></div>
+        </a>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="section" aria-labelledby="about-heading">
+      <div class="about-grid">
+        <div>
+          <span class="eyebrow fade-up">About Blooms Gown</span>
+          <h2 class="about-heading reveal" id="about-heading">Curated for <em>the moment</em> that matters.</h2>
+          <p class="about-body fade-up">We believe every woman deserves to feel breathtaking. Blooms Gown curates 400+ designer gowns — each handpicked, professionally maintained, and styled to perfection. From prom night to the aisle, we dress the moments you will never forget.</p>
+          <a href="https://wa.link/bloomsgown" target="_blank" rel="noopener" class="btn-outline fade-up">Our Story &#8599;</a>
+        </div>
+        <div class="about-stats fade-up" aria-label="Statistics">
+          <div class="about-stat-tile"><span class="tile-num">400+</span><span class="tile-label">Designer Gowns</span></div>
+          <div class="about-stat-tile"><span class="tile-num">21K</span><span class="tile-label">Followers</span></div>
+          <div class="about-stat-tile"><span class="tile-num">5&#9733;</span><span class="tile-label">Rating</span></div>
+          <div class="about-stat-tile"><span class="tile-num">By</span><span class="tile-label">Appointment</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURED GOWNS -->
+    <section class="section featured" aria-labelledby="featured-heading">
+      <div class="featured-header">
+        <div>
+          <span class="eyebrow" style="color:rgba(196,168,130,0.5)">New &amp; Notable</span>
+          <h2 class="featured-title" id="featured-heading">Featured <em>Gowns</em></h2>
+        </div>
+        <a href="collections.html" class="featured-link">View All Gowns &#8594;</a>
+      </div>
+      <div class="product-grid" id="featuredGrid" aria-label="Featured gowns"></div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="section how" aria-labelledby="how-heading">
+      <div class="how-header">
+        <span class="eyebrow" style="color:rgba(196,168,130,0.4)">The Process</span>
+        <h2 class="how-title reveal" id="how-heading">How it works</h2>
+        <p class="how-subtitle fade-up">Four simple steps from discovery to your entrance.</p>
+      </div>
+      <div class="how-steps">
+        <div class="how-step fade-up">
+          <p class="step-num">01</p>
+          <span class="step-icon" aria-hidden="true">&#10022;</span>
+          <h3 class="step-title">Browse</h3>
+          <p class="step-body">Explore 400+ curated gowns online. Filter by occasion, colour, and silhouette.</p>
+        </div>
+        <div class="how-step fade-up" style="transition-delay:.1s">
+          <p class="step-num">02</p>
+          <span class="step-icon" aria-hidden="true">&#9671;</span>
+          <h3 class="step-title">Book Appointment</h3>
+          <p class="step-body">Message us on WhatsApp. We hold your chosen gown and confirm your fitting session.</p>
+        </div>
+        <div class="how-step fade-up" style="transition-delay:.2s">
+          <p class="step-num">03</p>
+          <span class="step-icon" aria-hidden="true">&#9711;</span>
+          <h3 class="step-title">Try &amp; Fit</h3>
+          <p class="step-body">Visit our KL boutique. Our stylists ensure every detail — fit, alterations, accessories — is perfect.</p>
+        </div>
+        <div class="how-step fade-up" style="transition-delay:.3s">
+          <p class="step-num">04</p>
+          <span class="step-icon" aria-hidden="true">&#9733;</span>
+          <h3 class="step-title">Make Your Entrance</h3>
+          <p class="step-body">Collect your gown. Dry-cleaning included. Walk in and make the night yours.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY MOSAIC -->
+    <section class="section gallery" aria-labelledby="gallery-heading">
+      <div class="gallery-header">
+        <span class="eyebrow fade-up">The Collection</span>
+        <h2 class="section-title reveal" id="gallery-heading">Gowns that <em>live</em> in memory.</h2>
+      </div>
+      <div class="mosaic" role="list">
+        <div class="mosaic-item fade-up" role="listitem">
+          <img src="images/ryleigh-lavender-2.jpg" alt="SC Ryleigh Lavender Gown" loading="lazy">
+          <div class="mosaic-label">Ryleigh Lavender · Ball Gown</div>
+        </div>
+        <div class="mosaic-item fade-up" role="listitem" style="transition-delay:.1s">
+          <img src="images/brielle-silver-2.jpg" alt="Brielle Silver Gown" loading="lazy">
+          <div class="mosaic-label">Brielle Silver · Mermaid</div>
+        </div>
+        <div class="mosaic-item fade-up" role="listitem" style="transition-delay:.2s">
+          <img src="images/kayanne-mermaid-1.jpg" alt="Kayanne Seashell Mermaid Gown" loading="lazy">
+          <div class="mosaic-label">Kayanne Seashell · Mermaid</div>
+        </div>
+        <div class="mosaic-item fade-up" role="listitem" style="transition-delay:.3s">
+          <img src="images/luna-slit-1.jpg" alt="Sherri Hill Luna Slit Gown" loading="lazy">
+          <div class="mosaic-label">Luna Embellished · Mermaid</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REVIEWS -->
+    <section class="section-sm reviews" aria-labelledby="reviews-heading">
+      <div class="reviews-header">
+        <span class="eyebrow fade-up">What They Say</span>
+        <h2 class="section-title reveal" id="reviews-heading">Loved by every <em>woman</em> who wore us.</h2>
+      </div>
+      <div class="reviews-track-wrap">
+        <div class="reviews-track" aria-label="Customer reviews">
+          <article class="review-card">
+            <div class="review-stars" aria-label="5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-text">"I wore the Ryleigh Lavender gown for prom and I cannot describe the feeling of walking in. Every single person turned around. Blooms Gown made me feel like the main character."</p>
+            <p class="review-author">Priya T.</p>
+            <p class="review-occ">Prom Night, 2024</p>
+          </article>
+          <article class="review-card">
+            <div class="review-stars" aria-label="5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-text">"The fitting experience was so personal and calm. They knew exactly which gown would suit my body and the occasion. The Kayanne mermaid for my ROM was absolutely perfect."</p>
+            <p class="review-author">Natasha A.</p>
+            <p class="review-occ">ROM Solemnisation, 2024</p>
+          </article>
+          <article class="review-card">
+            <div class="review-stars" aria-label="5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-text">"I was nervous about renting for my dinner gala — worried it wouldn't feel special. But Blooms Gown changed my mind entirely. The quality, the care, the attention. I felt like a celebrity."</p>
+            <p class="review-author">Mei Lin C.</p>
+            <p class="review-occ">Corporate Dinner, 2024</p>
+          </article>
+          <article class="review-card">
+            <div class="review-stars" aria-label="5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-text">"The Joyce Overskirt gown was everything I dreamed of. Full bridal moment for the ceremony, then I removed the overlay for the dinner — gasps both times. Worth every ringgit."</p>
+            <p class="review-author">Sofea R.</p>
+            <p class="review-occ">Wedding, 2024</p>
+          </article>
+          <article class="review-card">
+            <div class="review-stars" aria-label="5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-text">"Came in not knowing what I wanted. Left with the most stunning sequin gown for our awards night. The team styled me, suggested accessories, and even pinned the alterations on the spot."</p>
+            <p class="review-author">Jasmine W.</p>
+            <p class="review-occ">Awards Night, 2023</p>
+          </article>
+          <article class="review-card">
+            <div class="review-stars" aria-label="5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-text">"I rented the Azra Red for my photoshoot and the photographer said it was the most striking outfit she had ever shot. The colour photographs like fire. Already planning to come back."</p>
+            <p class="review-author">Darshini K.</p>
+            <p class="review-occ">Creative Photoshoot, 2024</p>
+          </article>
+          <!-- Duplicate for seamless loop -->
+          <article class="review-card" aria-hidden="true">
+            <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-text">"I wore the Ryleigh Lavender gown for prom and I cannot describe the feeling of walking in. Every single person turned around. Blooms Gown made me feel like the main character."</p>
+            <p class="review-author">Priya T.</p>
+            <p class="review-occ">Prom Night, 2024</p>
+          </article>
+          <article class="review-card" aria-hidden="true">
+            <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-text">"The fitting experience was so personal and calm. They knew exactly which gown would suit my body and the occasion. The Kayanne mermaid for my ROM was absolutely perfect."</p>
+            <p class="review-author">Natasha A.</p>
+            <p class="review-occ">ROM Solemnisation, 2024</p>
+          </article>
+          <article class="review-card" aria-hidden="true">
+            <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-text">"I was nervous about renting for my dinner gala — worried it wouldn't feel special. But Blooms Gown changed my mind entirely. The quality, the care, the attention. I felt like a celebrity."</p>
+            <p class="review-author">Mei Lin C.</p>
+            <p class="review-occ">Corporate Dinner, 2024</p>
+          </article>
+          <article class="review-card" aria-hidden="true">
+            <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-text">"The Joyce Overskirt gown was everything I dreamed of. Full bridal moment for the ceremony, then I removed the overlay for the dinner — gasps both times. Worth every ringgit."</p>
+            <p class="review-author">Sofea R.</p>
+            <p class="review-occ">Wedding, 2024</p>
+          </article>
+          <article class="review-card" aria-hidden="true">
+            <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-text">"Came in not knowing what I wanted. Left with the most stunning sequin gown for our awards night. The team styled me, suggested accessories, and even pinned the alterations on the spot."</p>
+            <p class="review-author">Jasmine W.</p>
+            <p class="review-occ">Awards Night, 2023</p>
+          </article>
+          <article class="review-card" aria-hidden="true">
+            <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="review-text">"I rented the Azra Red for my photoshoot and the photographer said it was the most striking outfit she had ever shot. The colour photographs like fire. Already planning to come back."</p>
+            <p class="review-author">Darshini K.</p>
+            <p class="review-occ">Creative Photoshoot, 2024</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA BANNER -->
+    <section class="cta-banner" aria-labelledby="cta-heading">
+      <h2 class="cta-banner-title reveal" id="cta-heading">The gown that makes <em>tonight</em> unforgettable.</h2>
+      <div class="cta-banner-btns fade-up">
+        <a href="collections.html" class="btn-dark">Browse Collection</a>
+        <a href="https://wa.link/bloomsgown" target="_blank" rel="noopener" class="btn-ghost">Book via WhatsApp</a>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section contact" aria-labelledby="contact-heading">
+      <div class="contact-grid">
+        <div>
+          <span class="eyebrow fade-up">Find Us</span>
+          <h2 class="contact-heading reveal" id="contact-heading">Visit the boutique.</h2>
+          <div class="contact-items">
+            <div class="contact-item fade-up">
+              <p class="contact-item-label">Address</p>
+              <p class="contact-item-value">3rd Mile Square, Kuala Lumpur<br>Jalan Klang Lama, 58000 KL</p>
+            </div>
+            <div class="contact-item fade-up" style="transition-delay:.08s">
+              <p class="contact-item-label">Hours</p>
+              <p class="contact-item-value">Monday – Saturday: 11am – 8pm<br>Sunday: 12pm – 6pm<br><em style="font-size:13px;color:var(--accent)">By appointment only</em></p>
+            </div>
+            <div class="contact-item fade-up" style="transition-delay:.14s">
+              <p class="contact-item-label">Instagram</p>
+              <p class="contact-item-value"><a href="https://instagram.com/blooms.gown" target="_blank" rel="noopener">@blooms.gown</a></p>
+            </div>
+            <div class="contact-item fade-up" style="transition-delay:.20s">
+              <p class="contact-item-label">WhatsApp</p>
+              <p class="contact-item-value"><a href="https://wa.link/bloomsgown" target="_blank" rel="noopener">+60 10-245 9588 — Book Now</a></p>
+            </div>
+          </div>
+        </div>
+        <div class="fade-up" style="transition-delay:.1s">
+          <div class="map-placeholder" role="figure" aria-label="Blooms Gown boutique location">
+            <div class="map-pattern" aria-hidden="true"></div>
+            <span class="map-pin" aria-hidden="true">&#9678;</span>
+            <p class="map-label">Visit Us</p>
+            <p class="map-sub">3rd Mile Square, Kuala Lumpur</p>
+            <a href="https://maps.google.com/?q=3rd+Mile+Square+Kuala+Lumpur" target="_blank" rel="noopener" class="map-link">Get Directions &#8594;</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer-top">
+      <div>
+        <a href="index.html" class="footer-logo" aria-label="Blooms Gown">
+          <span class="logo-blooms">Blooms</span>
+          <span class="logo-gown">gown</span>
+        </a>
+        <p class="footer-tagline">Luxury dress rental · Kuala Lumpur</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="collections.html">All Collections</a></li>
+            <li><a href="collections.html?occasion=prom">Prom Night</a></li>
+            <li><a href="collections.html?occasion=bridal">Bridal</a></li>
+            <li><a href="collections.html?occasion=dinner">Dinner &amp; Gala</a></li>
+            <li><a href="collections.html?occasion=awards">Awards Night</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <ul>
+            <li><a href="https://instagram.com/blooms.gown" target="_blank" rel="noopener">Instagram</a></li>
+            <li><a href="https://wa.link/bloomsgown" target="_blank" rel="noopener">WhatsApp</a></li>
+            <li><a href="https://wa.link/bloomsgown" target="_blank" rel="noopener">Book Now</a></li>
+          </ul>
+        </div>
+      </div>
     </div>
-  </aside>
-  <section class="grid-area" aria-label="Gown catalogue">
-    <div class="toolbar">
-      <p class="tb-count" aria-live="polite"><strong id="tbCount">16</strong>&nbsp;gowns</p>
-      <select class="sort" id="sortSel" aria-label="Sort order">
-        <option value="default">Sort: Featured</option>
-        <option value="az">Name A–Z</option>
-        <option value="za">Name Z–A</option>
-      </select>
+    <div class="footer-bottom">
+      <p class="footer-copy">&#169; 2025 Blooms Gown. All rights reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="https://wa.link/bloomsgown" target="_blank" rel="noopener">Contact</a>
+      </div>
     </div>
-    <div class="grid" id="grid" role="list">
-      <article class="card" role="listitem" data-color="blush" data-name="Trinity Blush Gown" data-order="1"><a class="card-link" href="./bloomsgown_product.html" aria-label="View Trinity Blush Gown"><div class="card-img"><div class="gown g-blush1" aria-hidden="true"></div><span class="card-dot co-blush" aria-hidden="true"></span><div class="card-hover" aria-hidden="true"><span class="card-enq">Enquire&nbsp;→</span></div></div><div class="card-meta"><h2 class="card-name">Trinity Blush Gown</h2><p class="card-sub">Blush · Evening</p></div></a></article>
-      <article class="card" role="listitem" data-color="sky" data-name="Sky Tulle Layered Gown" data-order="2"><a class="card-link" href="./bloomsgown_product.html" aria-label="View Sky Tulle Layered Gown"><div class="card-img"><div class="gown g-sky1" aria-hidden="true"></div><span class="card-dot co-sky" aria-hidden="true"></span><div class="card-hover" aria-hidden="true"><span class="card-enq">Enquire&nbsp;→</span></div></div><div class="card-meta"><h2 class="card-name">Sky Tulle Layered Gown</h2><p class="card-sub">Sky · Midi</p></div></a></article>
-      <article class="card" role="listitem" data-color="pearl" data-name="Pearl Embellished Slit Gown" data-order="3"><a class="card-link" href="./bloomsgown_product.html" aria-label="View Pearl Embellished Slit Gown"><div class="card-img"><div class="gown g-pearl1" aria-hidden="true"></div><span class="card-dot co-pearl" aria-hidden="true"></span><div class="card-hover" aria-hidden="true"><span class="card-enq">Enquire&nbsp;→</span></div></div><div class="card-meta"><h2 class="card-name">Pearl Embellished Slit Gown</h2><p class="card-sub">Pearl · Embellished</p></div></a></article>
-      <article class="card" role="listitem" data-color="lavender" data-name="Ryleigh Lavender Ball Gown" data-order="4"><a class="card-link" href="./bloomsgown_product.html" aria-label="View Ryleigh Lavender Ball Gown"><div class="card-img"><div class="gown g-lavender1" aria-hidden="true"></div><span class="card-dot co-lavender" aria-hidden="true"></span><div class="card-hover" aria-hidden="true"><span class="card-enq">Enquire&nbsp;→</span></div></div><div class="card-meta"><h2 class="card-name">Ryleigh Lavender Ball Gown</h2><p class="card-sub">Lavender · Ball Gown</p></div></a></article>
-      <article class="card" role="listitem" data-color="lavender" data-name="Reyla Lavender Sparkle Tulle" data-order="5"><a class="card-link" href="./bloomsgown_product.html" aria-label="View Reyla Lavender Sparkle Tulle"><div class="card-img"><div class="gown g-lavender2" aria-hidden="true"></div><span class="card-dot co-lavender" aria-hidden="true"></span><div class="card-hover" aria-hidden="true"><span class="card-enq">Enquire&nbsp;→</span></div></div><div class="card-meta"><h2 class="card-name">Reyla Lavender Sparkle Tulle</h2><p class="card-sub">Lavender · Layered</p></div></a></article>
-      <article class="card" role="listitem" data-color="blush" data-name="Dusty Rose Satin Gown" data-order="6"><a class="card-link" href="./bloomsgown_product.html" aria-label="View Dusty Rose Satin Gown"><div class="card-img"><div class="gown g-blush2" aria-hidden="true"></div><span class="card-dot co-blush" aria-hidden="true"></span><div class="card-hover" aria-hidden="true"><span class="card-enq">Enquire&nbsp;→</span></div></div><div class="card-meta"><h2 class="card-name">Dusty Rose Satin Gown</h2><p class="card-sub">Blush · Layered</p></div></a></article>
-      <article class="card" role="listitem" data-color="burgundy" data-name="Burgundy Layered Ball Gown" data-order="7"><a class="card-link" href="./bloomsgown_product.html" aria-label="View Burgundy Layered Ball Gown"><div class="card-img"><div class="gown g-burgundy1" aria-hidden="true"></div><span class="card-dot co-burgundy" aria-hidden="true"></span><div class="card-hover" aria-hidden="true"><span class="card-enq">Enquire&nbsp;→</span></div></div><div class="card-meta"><h2 class="card-name">Burgundy Layered Ball Gown</h2><p class="card-sub">Burgundy · Ball Gown</p></div></a></article>
-      <article class="card" role="listitem" data-color="silver" data-name="Silver Sequin Mermaid" data-order="8"><a class="card-link" href="./bloomsgown_product.html" aria-label="View Silver Sequin Mermaid"><div class="card-img"><div class="gown g-silver1" aria-hidden="true"></div><span class="card-dot co-silver" aria-hidden="true"></span><div class="card-hover" aria-hidden="true"><span class="card-enq">Enquire&nbsp;→</span></div></div><div class="card-meta"><h2 class="card-name">Silver Sequin Mermaid</h2><p class="card-sub">Silver · Mermaid</p></div></a></article>
-      <article class="card" role="listitem" data-color="champagne" data-name="Champagne Sequin Ball Gown" data-order="9"><a class="card-link" href="./bloomsgown_product.html" aria-label="View Champagne Sequin Ball Gown"><div class="card-img"><div class="gown g-champagne1" aria-hidden="true"></div><span class="card-dot co-champagne" aria-hidden="true"></span><div class="card-hover" aria-hidden="true"><span class="card-enq">Enquire&nbsp;→</span></div></div><div class="card-meta"><h2 class="card-name">Champagne Sequin Ball Gown</h2><p class="card-sub">Champagne · Draped</p></div></a></article>
-      <article class="card" role="listitem" data-color="rosegold" data-name="Rose Gold Satin Mermaid" data-order="10"><a class="card-link" href="./bloomsgown_product.html" aria-label="View Rose Gold Satin Mermaid"><div class="card-img"><div class="gown g-rosegold1" aria-hidden="true"></div><span class="card-dot co-rosegold" aria-hidden="true"></span><div class="card-hover" aria-hidden="true"><span class="card-enq">Enquire&nbsp;→</span></div></div><div class="card-meta"><h2 class="card-name">Rose Gold Satin Mermaid</h2><p class="card-sub">Rose Gold · Satin</p></div></a></article>
-      <article class="card" role="listitem" data-color="onyx" data-name="Onyx Midnight Gown" data-order="11"><a class="card-link" href="./bloomsgown_product.html" aria-label="View Onyx Midnight Gown"><div class="card-img"><div class="gown g-onyx1" aria-hidden="true"></div><span class="card-dot co-onyx" aria-hidden="true"></span><div class="card-hover" aria-hidden="true"><span class="card-enq">Enquire&nbsp;→</span></div></div><div class="card-meta"><h2 class="card-name">Onyx Midnight Gown</h2><p class="card-sub">Onyx · Embellished</p></div></a></article>
-      <article class="card" role="listitem" data-color="forest" data-name="Emerald With Sleeves Gown" data-order="12"><a class="card-link" href="./bloomsgown_product.html" aria-label="View Emerald With Sleeves Gown"><div class="card-img"><div class="gown g-forest1" aria-hidden="true"></div><span class="card-dot co-forest" aria-hidden="true"></span><div class="card-hover" aria-hidden="true"><span class="card-enq">Enquire&nbsp;→</span></div></div><div class="card-meta"><h2 class="card-name">Emerald With Sleeves Gown</h2><p class="card-sub">Forest · Velvet</p></div></a></article>
-      <article class="card" role="listitem" data-color="pearl" data-name="Pearl Strapless Silk Gown" data-order="13"><a class="card-link" href="./bloomsgown_product.html" aria-label="View Pearl Strapless Silk Gown"><div class="card-img"><div class="gown g-pearl2" aria-hidden="true"></div><span class="card-dot co-pearl" aria-hidden="true"></span><div class="card-hover" aria-hidden="true"><span class="card-enq">Enquire&nbsp;→</span></div></div><div class="card-meta"><h2 class="card-name">Pearl Strapless Silk Gown</h2><p class="card-sub">Pearl · Strapless</p></div></a></article>
-      <article class="card" role="listitem" data-color="sky" data-name="Sky Blue Tiered Ball Gown" data-order="14"><a class="card-link" href="./bloomsgown_product.html" aria-label="View Sky Blue Tiered Ball Gown"><div class="card-img"><div class="gown g-sky2" aria-hidden="true"></div><span class="card-dot co-sky" aria-hidden="true"></span><div class="card-hover" aria-hidden="true"><span class="card-enq">Enquire&nbsp;→</span></div></div><div class="card-meta"><h2 class="card-name">Sky Blue Tiered Ball Gown</h2><p class="card-sub">Sky · Feather</p></div></a></article>
-      <article class="card" role="listitem" data-color="burgundy" data-name="Deep Rose Off-Shoulder" data-order="15"><a class="card-link" href="./bloomsgown_product.html" aria-label="View Deep Rose Off-Shoulder"><div class="card-img"><div class="gown g-burgundy2" aria-hidden="true"></div><span class="card-dot co-burgundy" aria-hidden="true"></span><div class="card-hover" aria-hidden="true"><span class="card-enq">Enquire&nbsp;→</span></div></div><div class="card-meta"><h2 class="card-name">Deep Rose Off-Shoulder</h2><p class="card-sub">Burgundy · Off-Shoulder</p></div></a></article>
-      <article class="card" role="listitem" data-color="silver" data-name="Silver Glitter V-neck Gown" data-order="16"><a class="card-link" href="./bloomsgown_product.html" aria-label="View Silver Glitter V-neck Gown"><div class="card-img"><div class="gown g-silver2" aria-hidden="true"></div><span class="card-dot co-silver" aria-hidden="true"></span><div class="card-hover" aria-hidden="true"><span class="card-enq">Enquire&nbsp;→</span></div></div><div class="card-meta"><h2 class="card-name">Silver Glitter V-neck Gown</h2><p class="card-sub">Silver · Asymmetric</p></div></a></article>
-      <div class="empty" id="empty" role="status"><p class="empty-t">No gowns found in this colour.<br>Please try another selection.</p></div>
-    </div>
-  </section>
-</div>
-<a class="wa" href="https://wa.link/bloomsgown" target="_blank" rel="noopener" aria-label="Book via WhatsApp">
-  <span class="wa-tip" aria-hidden="true">Book Now</span>
-  <svg viewBox="0 0 24 24" fill="white" aria-hidden="true" focusable="false"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
-</a>
-<script>
-(function(){'use strict';
-  function th(fn,ms){let t=0;return function(){const n=Date.now();if(n-t>ms){t=n;fn.apply(this,arguments)}}}
-  const nav=document.getElementById('nav');
-  window.addEventListener('scroll',th(()=>nav.classList.toggle('slim',scrollY>48),60),{passive:true});
-  const ham=document.getElementById('ham'),drawer=document.getElementById('drawer');
-  function closeNav(){ham.classList.remove('open');drawer.classList.remove('open');ham.setAttribute('aria-expanded','false')}
-  window.closeNav=closeNav;
-  ham.addEventListener('click',()=>{const o=!ham.classList.contains('open');ham.classList.toggle('open',o);drawer.classList.toggle('open',o);ham.setAttribute('aria-expanded',String(o))});
-  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeNav()});
-  const cards=[...document.querySelectorAll('.card')];
-  const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting&&!e.target.classList.contains('out')){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.07,rootMargin:'0px 0px -28px 0px'});
-  cards.forEach((c,i)=>{c.style.setProperty('--d',(i%4)*52+'ms');io.observe(c)});
-  let active='all';
-  const labels={all:'All Gowns',blush:'Blush',burgundy:'Burgundy',champagne:'Champagne',forest:'Forest',lavender:'Lavender',onyx:'Onyx',pearl:'Pearl',rosegold:'Rose Gold',silver:'Silver',sky:'Sky'};
-  const countEl=document.getElementById('count'),tbEl=document.getElementById('tbCount'),sbActive=document.getElementById('sbActive'),sbPill=document.getElementById('sbPill'),sbPillText=document.getElementById('sbPillText'),emptyEl=document.getElementById('empty');
-  function setFilter(color){
-    if(color===active)return;active=color;
-    document.querySelectorAll('[data-color]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.color===color)));
-    let v=0;
-    cards.forEach(c=>{const show=color==='all'||c.dataset.color===color;if(show){c.classList.remove('out');v++;if(!c.classList.contains('in'))io.observe(c)}else c.classList.add('out')});
-    countEl.textContent=v;tbEl.textContent=v;
-    if(color==='all'){sbPill.classList.remove('in');setTimeout(()=>{sbActive.style.display='none'},280)}
-    else{sbActive.style.display='block';sbPillText.textContent=labels[color]||color;requestAnimationFrame(()=>sbPill.classList.add('in'))}
-    emptyEl.classList.toggle('show',v===0);
-  }
-  window.setFilter=setFilter;
-  document.getElementById('swatchList').addEventListener('click',e=>{const b=e.target.closest('[data-color]');if(b)setFilter(b.dataset.color)});
-  document.getElementById('mStrip').addEventListener('click',e=>{const b=e.target.closest('[data-color]');if(b)setFilter(b.dataset.color)});
-  document.getElementById('sortSel').addEventListener('change',function(){
-    const v=this.value,grid=document.getElementById('grid'),empty=document.getElementById('empty');
-    const s=cards.filter(c=>!c.classList.contains('out'));
-    s.sort((a,b)=>v==='az'?a.dataset.name.localeCompare(b.dataset.name):v==='za'?b.dataset.name.localeCompare(a.dataset.name):(+a.dataset.order)-(+b.dataset.order));
-    const f=document.createDocumentFragment();s.forEach(c=>f.appendChild(c));grid.insertBefore(f,empty);
-  });
-})();
-</script>
+  </footer>
+
+  <!-- WA FLOAT -->
+  <a href="https://wa.link/bloomsgown" target="_blank" rel="noopener" class="wa-float" aria-label="Chat on WhatsApp">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+
+  <script>
+    // ── NAV SCROLL ──
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // ── DRAWER ──
+    const burger = document.getElementById('navBurger');
+    const drawer = document.getElementById('drawer');
+    let open = false;
+    function toggleDrawer(state) {
+      open = state;
+      burger.classList.toggle('open', state);
+      drawer.classList.toggle('open', state);
+      burger.setAttribute('aria-expanded', state);
+      document.body.style.overflow = state ? 'hidden' : '';
+    }
+    burger.addEventListener('click', () => toggleDrawer(!open));
+    drawer.addEventListener('click', e => { if (e.target === drawer) toggleDrawer(false); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && open) toggleDrawer(false); });
+
+    // ── FEATURED GOWNS ──
+    const occMap = { prom:'Prom', bridal:'Bridal', rom:'ROM', dinner:'Dinner', awards:'Awards', photoshoot:'Photoshoot' };
+    function buildCard(p) {
+      const img = p.images[0] || '';
+      const occ = p.occasions.map(k => occMap[k] || k).join(' · ');
+      const a = document.createElement('a');
+      a.className = 'product-card';
+      a.href = 'product.html?id=' + p.id;
+      a.setAttribute('aria-label', p.name);
+      a.innerHTML =
+        '<div class="card-img-wrap">' +
+          '<img class="card-img" src="images/' + img + '" alt="' + p.name + '" loading="lazy">' +
+          '<div class="card-dot ' + p.dot + '" aria-hidden="true"></div>' +
+          (p.isNew ? '<span class="card-badge">New</span>' : '') +
+          '<div class="card-overlay" aria-hidden="true"><span class="card-overlay-text">View Gown &#8594;</span></div>' +
+        '</div>' +
+        '<div class="card-meta">' +
+          '<p class="card-name">' + p.name + '</p>' +
+          '<div class="card-tags"><span class="card-tag">' + p.silhouette + '</span><span class="card-tag">·</span><span class="card-tag">' + occ + '</span></div>' +
+        '</div>';
+      return a;
+    }
+
+    const grid = document.getElementById('featuredGrid');
+    window.PRODUCTS.slice(0, 8).forEach((p, i) => {
+      const card = buildCard(p);
+      card.style.transitionDelay = (i * 0.07) + 's';
+      grid.appendChild(card);
+    });
+
+    // ── INTERSECTION OBSERVER ──
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal, .fade-up, .product-card').forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>
