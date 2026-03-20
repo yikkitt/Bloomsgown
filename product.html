@@ -17,7 +17,7 @@
       --ease-snap: cubic-bezier(.16,1,.3,1); --ease-smooth: cubic-bezier(.4,0,.2,1);
       --nav-h: 72px;
     }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; overflow-x: hidden; -webkit-overflow-scrolling: touch; }
     body { font-family: var(--font); background: var(--ivory); color: var(--text); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
     img { display: block; max-width: 100%; }
     a { color: inherit; text-decoration: none; }
@@ -32,12 +32,12 @@
     .nav-logo .logo-blooms { font-size: 14px; font-variant: small-caps; letter-spacing: 0.22em; color: var(--sand); text-transform: lowercase; }
     .nav-logo .logo-gown { font-size: 20px; font-style: italic; color: var(--ivory); letter-spacing: 0.04em; }
     .nav-links { display: flex; gap: 36px; list-style: none; }
-    .nav-links a { font-size: 13px; letter-spacing: 0.12em; color: rgba(250,246,238,0.75); transition: color 0.25s; text-transform: uppercase; }
+    .nav-links a { font-size: 13px; letter-spacing: 0.12em; color: rgba(250,246,238,0.75); transition: color 0.25s; text-transform: uppercase; min-height: 44px; display: flex; align-items: center; }
     .nav-links a:hover { color: var(--ivory); }
     .nav-actions { display: flex; align-items: center; gap: 20px; }
-    .nav-wa { display: flex; align-items: center; gap: 8px; font-size: 12px; letter-spacing: 0.1em; color: var(--sand); text-transform: uppercase; border: 1px solid rgba(196,168,130,0.3); padding: 8px 18px; border-radius: 100px; transition: all 0.3s var(--ease-smooth); }
+    .nav-wa { display: flex; align-items: center; gap: 8px; font-size: 12px; letter-spacing: 0.1em; color: var(--sand); text-transform: uppercase; border: 1px solid rgba(196,168,130,0.3); padding: 8px 18px; border-radius: 100px; transition: all 0.3s var(--ease-smooth); min-height: 44px; }
     .nav-wa:hover { background: rgba(196,168,130,0.1); border-color: var(--taupe); color: var(--ivory); }
-    .nav-burger { display: none; flex-direction: column; gap: 5px; padding: 8px; cursor: pointer; }
+    .nav-burger { display: none; flex-direction: column; gap: 5px; padding: 8px; cursor: pointer; min-height: 44px; min-width: 44px; align-items: center; justify-content: center; }
     .nav-burger span { display: block; width: 22px; height: 1.5px; background: var(--ivory); transition: all 0.35s var(--ease-snap); transform-origin: center; }
     .nav-burger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
     .nav-burger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
@@ -45,17 +45,17 @@
     .drawer { position: fixed; inset: 0; z-index: 99; background: var(--dark); display: flex; flex-direction: column; justify-content: center; padding: 48px; opacity: 0; pointer-events: none; transition: opacity 0.45s var(--ease-snap); }
     .drawer.open { opacity: 1; pointer-events: all; }
     .drawer nav { display: flex; flex-direction: column; gap: 8px; }
-    .drawer nav a { font-size: clamp(36px,7vw,64px); font-style: italic; color: var(--ivory); letter-spacing: -0.01em; line-height: 1.15; opacity: 0; transform: translateY(24px); transition: opacity 0.45s var(--ease-snap), transform 0.45s var(--ease-snap), color 0.2s; }
+    .drawer nav a { font-size: clamp(36px,7vw,64px); font-style: italic; color: var(--ivory); letter-spacing: -0.01em; line-height: 1.15; opacity: 0; transform: translateY(24px); transition: opacity 0.45s var(--ease-snap), transform 0.45s var(--ease-snap), color 0.2s; min-height: 44px; display: flex; align-items: center; }
     .drawer nav a:hover { color: var(--taupe); }
     .drawer.open nav a { opacity: 1; transform: translateY(0); }
-    .drawer.open nav a:nth-child(1){transition-delay:.08s} .drawer.open nav a:nth-child(2){transition-delay:.13s} .drawer.open nav a:nth-child(3){transition-delay:.18s} .drawer.open nav a:nth-child(4){transition-delay:.23s} .drawer.open nav a:nth-child(5){transition-delay:.28s} .drawer.open nav a:nth-child(6){transition-delay:.33s}
+    .drawer.open nav a:nth-child(1){transition-delay:.08s} .drawer.open nav a:nth-child(2){transition-delay:.13s} .drawer.open nav a:nth-child(3){transition-delay:.18s} .drawer.open nav a:nth-child(4){transition-delay:.23s}
     .drawer-footer { position: absolute; bottom: 48px; left: 48px; font-size: 12px; letter-spacing: 0.15em; color: rgba(250,246,238,0.35); text-transform: uppercase; }
 
     /* ═══════ BREADCRUMB ═══════ */
     .breadcrumb { padding: calc(var(--nav-h) + 24px) 48px 0; display: flex; align-items: center; gap: 10px; }
-    .breadcrumb a, .breadcrumb span { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
+    .breadcrumb a, .breadcrumb span { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); min-height: 44px; display: flex; align-items: center; }
     .breadcrumb a:hover { color: var(--head); }
-    .breadcrumb .sep { color: var(--taupe); font-size: 10px; }
+    .breadcrumb .sep { color: var(--taupe); font-size: 10px; min-height: unset; display: inline; }
     .breadcrumb .current { color: var(--sub); }
 
     /* ═══════ PRODUCT LAYOUT ═══════ */
@@ -101,6 +101,7 @@
       transition: opacity 0.3s var(--ease-smooth);
       z-index: 2;
       border: none;
+      min-height: 40px;
     }
     .main-img-wrap:hover .gallery-arrow { opacity: 1; }
     .gallery-arrow-prev { left: 12px; }
@@ -111,6 +112,7 @@
       display: flex;
       gap: 8px;
       margin-top: 12px;
+      -webkit-overflow-scrolling: touch;
     }
     .thumb {
       width: 64px; height: 80px;
@@ -120,6 +122,7 @@
       border: 2px solid transparent;
       transition: border-color 0.25s var(--ease-smooth);
       flex-shrink: 0;
+      min-height: 44px;
     }
     .thumb.active { border-color: var(--accent); }
     .thumb img { width: 100%; height: 100%; object-fit: cover; }
@@ -134,7 +137,7 @@
     }
     .lightbox.open { opacity: 1; pointer-events: all; }
     .lightbox-img { max-height: 90vh; max-width: 90vw; object-fit: contain; border-radius: 4px; }
-    .lightbox-close { position: absolute; top: 24px; right: 24px; font-size: 28px; color: var(--ivory); cursor: pointer; opacity: 0.6; transition: opacity 0.2s; background: none; border: none; font-family: var(--font); }
+    .lightbox-close { position: absolute; top: 24px; right: 24px; font-size: 28px; color: var(--ivory); cursor: pointer; opacity: 0.6; transition: opacity 0.2s; background: none; border: none; font-family: var(--font); min-height: 44px; min-width: 44px; display: flex; align-items: center; justify-content: center; }
     .lightbox-close:hover { opacity: 1; }
     .lightbox-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(250,246,238,0.1); border: 1px solid rgba(250,246,238,0.15); color: var(--ivory); font-size: 20px; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.2s; }
     .lightbox-arrow:hover { background: rgba(250,246,238,0.2); }
@@ -180,16 +183,6 @@
 
     .info-rule { border: none; border-top: 1px solid var(--sand); margin: 24px 0; }
 
-    .occ-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
-    .occ-tag {
-      font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--sub); background: var(--cream);
-      padding: 5px 14px; border-radius: 100px;
-      border: 1px solid var(--sand);
-      transition: all 0.25s var(--ease-smooth);
-    }
-    .occ-tag:hover { background: var(--head); color: var(--ivory); border-color: var(--head); }
-
     .info-desc {
       font-size: 16px;
       line-height: 1.78;
@@ -227,6 +220,7 @@
       background: transparent; cursor: pointer;
       text-align: center; font-family: var(--font);
       transition: all 0.25s var(--ease-smooth);
+      min-height: 44px;
     }
     .dur-btn:hover { border-color: var(--taupe); }
     .dur-btn.selected { border-color: var(--head); background: var(--cream); }
@@ -257,6 +251,7 @@
       padding: 16px 28px; border-radius: 100px; border: none; cursor: pointer;
       transition: all 0.3s var(--ease-smooth);
       text-decoration: none;
+      min-height: 44px;
     }
     .btn-book:hover { background: var(--sub); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(44,18,8,0.25); }
     .btn-book.locked { background: var(--sand); color: var(--taupe); cursor: not-allowed; pointer-events: none; transform: none; box-shadow: none; }
@@ -267,6 +262,7 @@
       padding: 15px 28px; border-radius: 100px; border: 1.5px solid var(--sand);
       cursor: pointer; transition: all 0.3s var(--ease-smooth);
       text-decoration: none;
+      min-height: 44px;
     }
     .btn-stylist:hover { border-color: var(--taupe); background: var(--cream); }
 
@@ -289,6 +285,7 @@
       background: transparent; font-family: var(--font); font-size: 15px; color: var(--head);
       cursor: pointer; text-align: left; letter-spacing: 0.01em;
       transition: background 0.2s;
+      min-height: 44px;
     }
     .acc-trigger:hover { background: var(--cream); }
     .acc-icon { font-size: 18px; color: var(--taupe); transition: transform 0.35s var(--ease-snap); flex-shrink: 0; }
@@ -321,6 +318,7 @@
       border-radius: 100px; border: none; cursor: pointer; text-align: center;
       transition: all 0.3s var(--ease-smooth);
       text-decoration: none;
+      min-height: 44px;
     }
     .mobile-bar-btn.locked { background: var(--sand); color: var(--taupe); pointer-events: none; }
 
@@ -387,6 +385,9 @@
       .breadcrumb { padding: calc(var(--nav-h) + 16px) 20px 0; flex-wrap: wrap; }
       .product-layout { grid-template-columns: 1fr; padding: 16px 20px 100px; gap: 32px; }
       .gallery-col { position: static; }
+      .thumb-strip { flex-wrap: wrap; }
+      .thumb { width: calc(25% - 6px); height: auto; aspect-ratio: 2/3; }
+      .btn-book { width: 100%; }
       .related { padding: 60px 20px; }
       .related-grid { grid-template-columns: repeat(2,1fr); gap: 12px; }
       .footer { padding: 48px 20px 32px; }
@@ -396,6 +397,7 @@
       .mobile-bar { display: block; }
       .cta-stack { display: none; }
       .wa-float { bottom: 96px; }
+      body { line-height: 1.6; }
     }
     @media (max-width: 480px) {
       .related-grid { grid-template-columns: repeat(2,1fr); }
@@ -415,10 +417,10 @@
       <span class="logo-gown">gown</span>
     </a>
     <ul class="nav-links">
-      <li><a href="collections.html">Collections</a></li>
-      <li><a href="collections.html?occasion=prom">Prom</a></li>
-      <li><a href="collections.html?occasion=bridal">Bridal</a></li>
-      <li><a href="collections.html?occasion=dinner">Dinner</a></li>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="collections.html">Collection</a></li>
+      <li><a href="index.html#about">About Us</a></li>
+      <li><a href="index.html#contact">Contact Us</a></li>
     </ul>
     <div class="nav-actions">
       <a href="https://wa.link/bloomsgown" target="_blank" rel="noopener" class="nav-wa">Book Appointment</a>
@@ -431,12 +433,10 @@
   <!-- DRAWER -->
   <div class="drawer" id="drawer" role="dialog" aria-label="Navigation menu">
     <nav>
-      <a href="collections.html">Collections</a>
-      <a href="collections.html?occasion=prom">Prom Night</a>
-      <a href="collections.html?occasion=bridal">Bridal</a>
-      <a href="collections.html?occasion=dinner">Dinner &amp; Gala</a>
-      <a href="collections.html?occasion=awards">Awards Night</a>
-      <a href="https://wa.link/bloomsgown" target="_blank" rel="noopener">Book Appointment &#8599;</a>
+      <a href="index.html">Home</a>
+      <a href="collections.html">Collection</a>
+      <a href="index.html#about">About Us</a>
+      <a href="index.html#contact">Contact Us</a>
     </nav>
     <p class="drawer-footer">Blooms Gown · Kuala Lumpur</p>
   </div>
@@ -472,7 +472,6 @@
       </h1>
       <p class="info-tagline" id="infoTagline"></p>
       <hr class="info-rule">
-      <div class="occ-tags" id="occTags"></div>
       <p class="info-desc" id="infoDesc"></p>
 
       <!-- SPECS -->
@@ -684,7 +683,6 @@
     const id = params.get('id') || (window.PRODUCTS[0] && window.PRODUCTS[0].id);
     const product = window.PRODUCTS.find(p => p.id === id) || window.PRODUCTS[0];
 
-    const occMap = { prom:'Prom Night', bridal:'Bridal', rom:'ROM', dinner:'Dinner & Gala', awards:'Awards Night', photoshoot:'Photoshoot' };
     const fabricCare = {
       'Sparkle Tulle': 'Handled with care — our in-house team ensures every tulle layer is perfectly pressed and stored flat. Please avoid sharp accessories that may snag the fabric.',
       'Satin Crepe': 'Satin crepe is delicate and reacts to moisture and heat. Keep away from liquids. Our team dry-cleans every gown between rentals.',
@@ -705,6 +703,8 @@
       'Feather · Crepe': 'Feather trim requires the most care. Keep away from moisture and wind during outdoor shoots. Store upright and flat.',
     };
 
+    let lbOpen = false;
+
     if (product) {
       // Breadcrumb
       document.getElementById('breadcrumbName').textContent = product.name;
@@ -719,23 +719,13 @@
       // Tagline
       document.getElementById('infoTagline').textContent = product.tagline;
 
-      // Kicker tags
+      // Kicker tags — colour · silhouette only (no occasion)
       const kicker = document.getElementById('infoKicker');
       [product.colour, product.silhouette].forEach(t => {
         const span = document.createElement('span');
         span.className = 'kicker-tag';
         span.textContent = t;
         kicker.appendChild(span);
-      });
-
-      // Occasion tags
-      const occTagsEl = document.getElementById('occTags');
-      product.occasions.forEach(o => {
-        const a = document.createElement('a');
-        a.className = 'occ-tag';
-        a.href = 'collections.html?occasion=' + o;
-        a.textContent = occMap[o] || o;
-        occTagsEl.appendChild(a);
       });
 
       // Description
@@ -820,7 +810,6 @@
       });
 
       // Lightbox
-      let lbOpen = false;
       const lightbox = document.getElementById('lightbox');
       const lightboxImg = document.getElementById('lightboxImg');
 
@@ -867,13 +856,11 @@
 
       function selectDuration(days) {
         selectedDuration = days;
-        // Desktop duration buttons
         document.querySelectorAll('#infoCol .dur-btn').forEach(b => {
           const sel = parseInt(b.dataset.days) === days;
           b.classList.toggle('selected', sel);
           b.setAttribute('aria-pressed', sel);
         });
-        // Mobile duration buttons
         document.querySelectorAll('#mobileDurOptions .dur-btn').forEach(b => {
           const sel = parseInt(b.dataset.days) === days;
           b.classList.toggle('selected', sel);
@@ -897,6 +884,7 @@
       document.querySelectorAll('#infoCol .dur-btn').forEach(btn => {
         btn.addEventListener('click', () => selectDuration(parseInt(btn.dataset.days)));
       });
+
       document.querySelectorAll('#mobileDurOptions .dur-btn').forEach(btn => {
         btn.addEventListener('click', () => selectDuration(parseInt(btn.dataset.days)));
       });
@@ -936,12 +924,10 @@
       trigger.addEventListener('click', () => {
         const item = trigger.closest('.acc-item');
         const isOpen = item.classList.contains('open');
-        // Close all
         document.querySelectorAll('.acc-item').forEach(i => {
           i.classList.remove('open');
           i.querySelector('.acc-trigger').setAttribute('aria-expanded','false');
         });
-        // Open clicked if was closed
         if (!isOpen) {
           item.classList.add('open');
           trigger.setAttribute('aria-expanded','true');

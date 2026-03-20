@@ -27,7 +27,7 @@
       --nav-h: 72px;
     }
 
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; overflow-x: hidden; -webkit-overflow-scrolling: touch; }
     body { font-family: var(--font); background: var(--ivory); color: var(--text); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
     img { display: block; max-width: 100%; }
     a { color: inherit; text-decoration: none; }
@@ -51,12 +51,12 @@
     .nav-logo .logo-blooms { font-size: 14px; font-variant: small-caps; letter-spacing: 0.22em; color: var(--sand); text-transform: lowercase; }
     .nav-logo .logo-gown { font-size: 20px; font-style: italic; color: var(--ivory); letter-spacing: 0.04em; }
     .nav-links { display: flex; gap: 36px; list-style: none; }
-    .nav-links a { font-size: 13px; letter-spacing: 0.12em; color: rgba(250,246,238,0.75); transition: color 0.25s; text-transform: uppercase; }
+    .nav-links a { font-size: 13px; letter-spacing: 0.12em; color: rgba(250,246,238,0.75); transition: color 0.25s; text-transform: uppercase; min-height: 44px; display: flex; align-items: center; }
     .nav-links a:hover, .nav-links a.active { color: var(--ivory); }
     .nav-actions { display: flex; align-items: center; gap: 20px; }
-    .nav-wa { display: flex; align-items: center; gap: 8px; font-size: 12px; letter-spacing: 0.1em; color: var(--sand); text-transform: uppercase; border: 1px solid rgba(196,168,130,0.3); padding: 8px 18px; border-radius: 100px; transition: all 0.3s var(--ease-smooth); }
+    .nav-wa { display: flex; align-items: center; gap: 8px; font-size: 12px; letter-spacing: 0.1em; color: var(--sand); text-transform: uppercase; border: 1px solid rgba(196,168,130,0.3); padding: 8px 18px; border-radius: 100px; transition: all 0.3s var(--ease-smooth); min-height: 44px; }
     .nav-wa:hover { background: rgba(196,168,130,0.1); border-color: var(--taupe); color: var(--ivory); }
-    .nav-burger { display: none; flex-direction: column; gap: 5px; padding: 8px; cursor: pointer; }
+    .nav-burger { display: none; flex-direction: column; gap: 5px; padding: 8px; cursor: pointer; min-height: 44px; min-width: 44px; align-items: center; justify-content: center; }
     .nav-burger span { display: block; width: 22px; height: 1.5px; background: var(--ivory); transition: all 0.35s var(--ease-snap); transform-origin: center; }
     .nav-burger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
     .nav-burger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
@@ -66,15 +66,13 @@
     .drawer { position: fixed; inset: 0; z-index: 99; background: var(--dark); display: flex; flex-direction: column; justify-content: center; padding: 48px; opacity: 0; pointer-events: none; transition: opacity 0.45s var(--ease-snap); }
     .drawer.open { opacity: 1; pointer-events: all; }
     .drawer nav { display: flex; flex-direction: column; gap: 8px; }
-    .drawer nav a { font-size: clamp(36px,7vw,64px); font-style: italic; color: var(--ivory); letter-spacing: -0.01em; line-height: 1.15; opacity: 0; transform: translateY(24px); transition: opacity 0.45s var(--ease-snap), transform 0.45s var(--ease-snap), color 0.2s; }
+    .drawer nav a { font-size: clamp(36px,7vw,64px); font-style: italic; color: var(--ivory); letter-spacing: -0.01em; line-height: 1.15; opacity: 0; transform: translateY(24px); transition: opacity 0.45s var(--ease-snap), transform 0.45s var(--ease-snap), color 0.2s; min-height: 44px; display: flex; align-items: center; }
     .drawer nav a:hover { color: var(--taupe); }
     .drawer.open nav a { opacity: 1; transform: translateY(0); }
     .drawer.open nav a:nth-child(1) { transition-delay: 0.08s; }
     .drawer.open nav a:nth-child(2) { transition-delay: 0.13s; }
     .drawer.open nav a:nth-child(3) { transition-delay: 0.18s; }
     .drawer.open nav a:nth-child(4) { transition-delay: 0.23s; }
-    .drawer.open nav a:nth-child(5) { transition-delay: 0.28s; }
-    .drawer.open nav a:nth-child(6) { transition-delay: 0.33s; }
     .drawer-footer { position: absolute; bottom: 48px; left: 48px; font-size: 12px; letter-spacing: 0.15em; color: rgba(250,246,238,0.35); text-transform: uppercase; }
 
     /* ═══════ PAGE HEADER ═══════ */
@@ -131,6 +129,7 @@
       height: 56px;
       overflow-x: auto;
       scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
     }
     .filter-inner::-webkit-scrollbar { display: none; }
 
@@ -153,6 +152,7 @@
       cursor: pointer;
       transition: all 0.25s var(--ease-smooth);
       font-family: var(--font);
+      min-height: 44px;
     }
     .axis-btn.active {
       background: var(--head);
@@ -169,6 +169,7 @@
       flex: 1;
       overflow-x: auto;
       scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
     }
     .filter-chips::-webkit-scrollbar { display: none; }
 
@@ -188,6 +189,7 @@
       white-space: nowrap;
       font-family: var(--font);
       transition: all 0.25s var(--ease-smooth);
+      min-height: 44px;
     }
     .chip:hover { border-color: var(--taupe); color: var(--head); }
     .chip.active { background: var(--head); color: var(--ivory); border-color: var(--head); }
@@ -215,6 +217,7 @@
       background-repeat: no-repeat;
       background-position: right 12px center;
       transition: border-color 0.2s;
+      min-height: 44px;
     }
     .sort-select:focus { outline: none; border-color: var(--taupe); }
 
@@ -227,20 +230,20 @@
       gap: 24px;
     }
 
-    .product-card {
+    .pcard {
       display: block;
       cursor: pointer;
       transition: opacity 0.5s var(--ease-smooth), transform 0.5s var(--ease-smooth);
     }
-    .product-card.dimmed { opacity: 0.38; }
-    .product-card.entering { animation: cardEnter 0.6s var(--ease-snap) both; }
+    .pcard.hidden { display: none !important; }
+    .pcard.entering { animation: cardEnter 0.6s var(--ease-snap) both; }
     @keyframes cardEnter { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
 
     .card-img-wrap { position: relative; border-radius: 10px; overflow: hidden; aspect-ratio: 2/3; background: var(--sand); }
     .card-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease-smooth); }
-    .product-card:not(.dimmed):hover .card-img { transform: scale(1.05); }
+    .pcard:hover .card-img { transform: scale(1.05); }
     .card-overlay { position: absolute; inset: 0; background: rgba(21,8,4,0.5); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.35s var(--ease-smooth); }
-    .product-card:not(.dimmed):hover .card-overlay { opacity: 1; }
+    .pcard:hover .card-overlay { opacity: 1; }
     .card-overlay-text { font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ivory); }
 
     .card-dot { position: absolute; top: 14px; left: 14px; width: 10px; height: 10px; border-radius: 50%; }
@@ -255,13 +258,12 @@
     .co-floral    { background: linear-gradient(135deg,#e8b4b8,#d4708a); }
 
     .card-badge { position: absolute; top: 14px; right: 14px; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--dark); background: var(--sand); padding: 4px 10px; border-radius: 100px; }
-    .card-meta { padding: 14px 2px 0; }
-    .card-name { font-size: 14px; color: var(--head); letter-spacing: 0.01em; line-height: 1.4; margin-bottom: 6px; }
-    .card-tags { display: flex; gap: 8px; flex-wrap: wrap; }
-    .card-tag { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--taupe); }
+    .card-meta { padding: 10px 2px 6px; }
+    .card-name { font-size: clamp(13px,1.2vw,14px); color: var(--head); letter-spacing: 0.01em; line-height: 1.4; }
 
     /* empty state */
-    .empty-state { grid-column: 1/-1; text-align: center; padding: 80px 20px; }
+    .empty-state { grid-column: 1/-1; text-align: center; padding: 80px 20px; display: none; }
+    .empty-state.show { display: block; }
     .empty-state h3 { font-size: 24px; color: var(--head); font-weight: 400; margin-bottom: 12px; }
     .empty-state p { font-size: 15px; font-style: italic; color: var(--accent); }
 
@@ -274,7 +276,7 @@
     .footer-links { display: flex; gap: 64px; }
     .footer-col h4 { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(196,168,130,0.4); margin-bottom: 20px; }
     .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
-    .footer-col ul a { font-size: 14px; color: rgba(250,246,238,0.55); transition: color 0.2s; }
+    .footer-col ul a { font-size: 14px; color: rgba(250,246,238,0.55); transition: color 0.2s; min-height: 44px; display: flex; align-items: center; }
     .footer-col ul a:hover { color: var(--ivory); }
     .footer-bottom { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
     .footer-copy { font-size: 12px; color: rgba(196,168,130,0.25); letter-spacing: 0.06em; }
@@ -297,15 +299,22 @@
       .nav-burger { display: flex; }
       .page-header { padding-left: 20px; padding-right: 20px; }
       .filter-bar { padding: 0 20px; }
+      .filter-inner { height: auto; flex-wrap: wrap; padding: 10px 0; gap: 8px; }
+      .filter-axis { margin-right: 0; width: 100%; }
+      .filter-divider { display: none; }
+      .filter-chips { width: 100%; flex: none; }
+      .filter-sort { margin-left: 0; width: 100%; }
+      .sort-select { width: 100%; }
       .collection-section { padding: 32px 20px 64px; }
-      .product-grid { grid-template-columns: repeat(2,1fr); gap: 12px; }
+      .product-grid { grid-template-columns: repeat(2,1fr); gap: 8px; }
       .footer { padding: 48px 20px 32px; }
       .footer-top { flex-direction: column; }
       .footer-links { flex-direction: column; gap: 32px; }
       .footer-bottom { flex-direction: column; align-items: flex-start; }
+      body { line-height: 1.6; }
     }
     @media (max-width: 480px) {
-      .product-grid { grid-template-columns: repeat(2,1fr); gap: 10px; }
+      .product-grid { grid-template-columns: repeat(2,1fr); gap: 8px; }
     }
   </style>
 </head>
@@ -318,10 +327,10 @@
       <span class="logo-gown">gown</span>
     </a>
     <ul class="nav-links">
-      <li><a href="collections.html" class="active">Collections</a></li>
-      <li><a href="collections.html?occasion=prom">Prom</a></li>
-      <li><a href="collections.html?occasion=bridal">Bridal</a></li>
-      <li><a href="collections.html?occasion=dinner">Dinner</a></li>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="collections.html" class="active">Collection</a></li>
+      <li><a href="index.html#about">About Us</a></li>
+      <li><a href="index.html#contact">Contact Us</a></li>
     </ul>
     <div class="nav-actions">
       <a href="https://wa.link/bloomsgown" target="_blank" rel="noopener" class="nav-wa">Book Appointment</a>
@@ -334,12 +343,10 @@
   <!-- DRAWER -->
   <div class="drawer" id="drawer" role="dialog" aria-label="Navigation menu">
     <nav>
-      <a href="collections.html">Collections</a>
-      <a href="collections.html?occasion=prom">Prom Night</a>
-      <a href="collections.html?occasion=bridal">Bridal</a>
-      <a href="collections.html?occasion=dinner">Dinner &amp; Gala</a>
-      <a href="collections.html?occasion=awards">Awards Night</a>
-      <a href="https://wa.link/bloomsgown" target="_blank" rel="noopener">Book Appointment &#8599;</a>
+      <a href="index.html">Home</a>
+      <a href="collections.html">Collection</a>
+      <a href="index.html#about">About Us</a>
+      <a href="index.html#contact">Contact Us</a>
     </nav>
     <p class="drawer-footer">Blooms Gown · Kuala Lumpur</p>
   </div>
@@ -353,7 +360,7 @@
         <span class="line"><span class="line-inner">Collections</span></span>
       </h1>
       <div class="page-header-meta">
-        <p class="count-display" id="countDisplay">Showing <strong id="countNum">31</strong> gowns</p>
+        <p class="count-display" id="countDisplay">Showing <strong id="countNum">0</strong> gowns</p>
       </div>
     </div>
   </section>
@@ -408,7 +415,12 @@
   <!-- COLLECTION GRID -->
   <main>
     <section class="collection-section">
-      <div class="product-grid" id="productGrid" aria-label="Gown collection"></div>
+      <div class="product-grid" id="productGrid" aria-label="Gown collection">
+        <div class="empty-state" id="emptyState">
+          <h3>No gowns found</h3>
+          <p>Try a different filter or browse all gowns.</p>
+        </div>
+      </div>
     </section>
   </main>
 
@@ -477,7 +489,6 @@
     document.addEventListener('keydown', e => { if (e.key === 'Escape' && drawerOpen) toggleDrawer(false); });
 
     // ── STATE ──
-    const occMap = { prom:'Prom', bridal:'Bridal', rom:'ROM', dinner:'Dinner', awards:'Awards', photoshoot:'Photoshoot' };
     let currentAxis = 'occasion';
     let activeOccasion = 'all';
     let activeColour = 'all';
@@ -508,7 +519,7 @@
           occasionChips.style.display = 'none';
           colourChips.style.display = 'flex';
         }
-        renderGrid();
+        applyFilters();
       });
     });
 
@@ -518,7 +529,7 @@
         activeOccasion = chip.dataset.occasion;
         document.querySelectorAll('#occasionChips .chip').forEach(c => c.classList.remove('active'));
         chip.classList.add('active');
-        renderGrid();
+        applyFilters();
       });
     });
 
@@ -528,7 +539,7 @@
         activeColour = chip.dataset.colour;
         document.querySelectorAll('#colourChips .chip').forEach(c => c.classList.remove('active'));
         chip.classList.add('active');
-        renderGrid();
+        applyFilters();
       });
     });
 
@@ -557,68 +568,77 @@
       return arr.sort((a,b) => a.order - b.order);
     }
 
-    // ── RENDER ──
+    // ── CARDS REFERENCE ──
     const grid = document.getElementById('productGrid');
     const countNum = document.getElementById('countNum');
+    const emptyEl = document.getElementById('emptyState');
+    let cards = [];
 
-    function buildCard(p, matched) {
-      const img = p.images[0] || '';
-      const occ = p.occasions.map(k => occMap[k] || k).join(' · ');
-      const a = document.createElement('a');
-      a.className = 'product-card' + (matched ? '' : ' dimmed');
-      a.href = 'product.html?id=' + p.id;
-      a.dataset.id = p.id;
-      a.setAttribute('aria-label', p.name);
-      a.innerHTML =
-        '<div class="card-img-wrap">' +
-          '<img class="card-img" src="images/' + img + '" alt="' + p.name + '" loading="lazy">' +
-          '<div class="card-dot ' + p.dot + '" aria-hidden="true"></div>' +
-          (p.isNew ? '<span class="card-badge">New</span>' : '') +
-          '<div class="card-overlay" aria-hidden="true"><span class="card-overlay-text">View Gown &#8594;</span></div>' +
-        '</div>' +
-        '<div class="card-meta">' +
-          '<p class="card-name">' + p.name + '</p>' +
-          '<div class="card-tags"><span class="card-tag">' + p.silhouette + '</span><span class="card-tag"> · </span><span class="card-tag">' + occ + '</span></div>' +
-        '</div>';
-      return a;
+    // Intersection Observer for lazy reveal
+    const pio = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('entering'); pio.unobserve(e.target); }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+
+    // ── APPLY FILTERS (hide/show) ──
+    function applyFilters() {
+      let visible = 0;
+      cards.forEach(c => {
+        const occ = c.dataset.occasion || '';
+        const col = c.dataset.colour || '';
+        const occOk = activeOccasion === 'all' || occ.split(' ').includes(activeOccasion);
+        const colOk = activeColour === 'all' || col === activeColour;
+        const show = occOk && colOk;
+        if (show) {
+          c.classList.remove('hidden');
+          visible++;
+          if (!c.classList.contains('entering')) pio.observe(c);
+        } else {
+          c.classList.add('hidden');
+        }
+      });
+      countNum.textContent = visible;
+      emptyEl.classList.toggle('show', visible === 0);
     }
 
+    // ── RENDER GRID ──
     function renderGrid() {
       const sorted = getSorted(window.PRODUCTS);
-      const matched = sorted.filter(p => isMatch(p));
-      const unmatched = sorted.filter(p => !isMatch(p));
 
-      // Update count
-      countNum.textContent = matched.length;
+      // Clear existing cards (not empty-state)
+      cards.forEach(c => c.remove());
+      cards = [];
 
-      // Smart sort: matched first, then unmatched (dimmed)
-      const ordered = [...matched, ...unmatched];
-
-      // Animate reorder via DOM rebuild with stagger
-      // Remove existing cards
-      while (grid.firstChild) grid.removeChild(grid.firstChild);
-
-      if (matched.length === 0) {
-        const empty = document.createElement('div');
-        empty.className = 'empty-state';
-        empty.innerHTML = '<h3>No gowns found</h3><p>Try a different filter or browse all gowns.</p>';
-        grid.appendChild(empty);
-        return;
-      }
-
-      ordered.forEach((p, i) => {
-        const isMatched = matched.includes(p);
-        const card = buildCard(p, isMatched);
-        if (isMatched) {
-          card.style.animationDelay = (i * 0.04) + 's';
-          card.classList.add('entering');
-        }
-        grid.appendChild(card);
+      sorted.forEach((p, i) => {
+        const img = p.images[0] || '';
+        const a = document.createElement('a');
+        a.className = 'pcard';
+        a.href = 'product.html?id=' + p.id;
+        a.dataset.id = p.id;
+        a.dataset.occasion = p.occasions.join(' ');
+        a.dataset.colour = p.colorKey || '';
+        a.setAttribute('aria-label', p.name);
+        a.style.animationDelay = (i * 0.03) + 's';
+        a.innerHTML =
+          '<div class="card-img-wrap">' +
+            '<img class="card-img" src="images/' + img + '" alt="' + p.name + '" loading="lazy">' +
+            '<div class="card-dot ' + p.dot + '" aria-hidden="true"></div>' +
+            (p.isNew ? '<span class="card-badge">New</span>' : '') +
+            '<div class="card-overlay" aria-hidden="true"><span class="card-overlay-text">View Gown &#8594;</span></div>' +
+          '</div>' +
+          '<div class="card-meta">' +
+            '<p class="card-name">' + p.name + '</p>' +
+          '</div>';
+        grid.insertBefore(a, emptyEl);
+        cards.push(a);
+        pio.observe(a);
       });
+
+      applyFilters();
     }
 
     // ── INIT ──
-    // Apply URL params to UI
     if (urlOcc) {
       document.querySelectorAll('#occasionChips .chip').forEach(c => {
         c.classList.toggle('active', c.dataset.occasion === urlOcc);
